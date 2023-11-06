@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Autíčka</title>
+</head>
+<body>
+    {% load static %}
+    <main>
+        <div>
+            <h1>Autíčkový web</h1>
+        </div>
+        <div>
+            <p>
+                Tyto stránky jsou věnovány ukázce automobilů v nabídce našeho autobazaru a případné rezervaci jejich prohlídky.
+            </p>
+            {% if auta_list %}
+                <ul>
+                    {% for auto in auta_list %}
+                    <li>{{ auto.rok_vyroby }} {{ auto.znacka }} {{ auto.model }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Neexistuje žádné auto</p>
+            {% endif %}
+        </div>
+    </main>
+</body>
