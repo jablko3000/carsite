@@ -17,7 +17,7 @@
             {% if auta_list %}
                 <ul>
                     {% for auto in auta_list %}
-                    <li>{{ auto.rok_vyroby }} {{ auto.znacka }} {{ auto.model }}</li>
+                    <li><a href="{% url 'auta:detail' auto.id %}">{{ auto.rok_vyroby }} {{ auto.znacka }} {{ auto.model }}</a></li>
                     {% endfor %}
                 </ul>
             {% else %}

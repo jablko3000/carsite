@@ -1,0 +1,10 @@
+<form action="{% url 'auta:reserve' auto.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ auto.rok_vyroby }} {{ auto.znacka }} {{ auto.model }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <input type="date" name="datum" value="{{ dnesni_datum|date:'Y-m-d' }}">
+        <input type="time" name="cas" value="{{ aktualni_cas}}">
+    </fieldset>
+    <input type="submit" value="Rezervovat">
+    </form>
