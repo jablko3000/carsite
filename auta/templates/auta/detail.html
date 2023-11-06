@@ -1,10 +1,11 @@
+<a href="{% url 'auta:homepage' %}">Zpět na hlavní stránku</a>
 <form action="{% url 'auta:reserve' auto.id %}" method="post">
     {% csrf_token %}
     <fieldset>
         <legend><h1>{{ auto.rok_vyroby }} {{ auto.znacka }} {{ auto.model }}</h1></legend>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <input type="date" name="datum" value="{{ dnesni_datum|date:'Y-m-d' }}">
-        <input type="time" name="cas" value="{{ aktualni_cas}}">
+        <h2>Vyberte si termín rezervace prohlídky/ukázkové jízdy vybraného vozidla.</h2>
+        {% if error_message %}<p style=color:rgb(188,36,36)><strong>{{ error_message }}</strong></p>{% endif %}
+        <input type="datetime-local" id='datum_a_cas' name="datum_a_cas" value="{{ aktualni_datum_a_cas }}">
     </fieldset>
     <input type="submit" value="Rezervovat">
     </form>
