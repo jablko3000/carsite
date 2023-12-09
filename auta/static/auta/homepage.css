@@ -11,6 +11,7 @@
   width: 15rem;
   height: 15rem;
   margin: 3rem;
+  margin-bottom: 105px;
 }
 
 .car_preview img{
@@ -22,10 +23,18 @@
 
 .car_description{
   position: absolute;
-  bottom: -50%;
+  bottom: -45%;
   width: 100%;
   height: auto;
-
   backdrop-filter: blur(10px);
-  mask: linear-gradient(to right, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0) 100%);
+}
+
+.car_description h3{
+  position: absolute;
+  right: 0%;
+  bottom: 0;
+}
+
+.car_description h4{
+  font-size: 22px;
 }

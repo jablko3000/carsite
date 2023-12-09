@@ -2,6 +2,10 @@
 {% block title %}{{ block.super }}{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="static/auta/homepage.css"/>
+    <link rel="stylesheet" href="static/auta/swiper.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         function formattedNumber(x) {
             document.write(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
@@ -46,6 +50,44 @@
             {% else %}
                 <p>Neexistuje žádné auto</p>
             {% endif %}
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">Slide 1</div>
+                  <div class="swiper-slide">Slide 2</div>
+                  <div class="swiper-slide">Slide 3</div>
+                  ...
+                </div>
+                <div class="swiper-pagination"></div>
+              
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+              
+                <div class="swiper-scrollbar"></div>
+            </div>
+            <script>
+                const swiper = new Swiper('.swiper', {
+                    // Optional parameters
+                    direction: 'vertical',
+                    loop: true,
+                  
+                    // If we need pagination
+                    pagination: {
+                      el: '.swiper-pagination',
+                    },
+                  
+                    // Navigation arrows
+                    navigation: {
+                      nextEl: '.swiper-button-next',
+                      prevEl: '.swiper-button-prev',
+                    },
+                  
+                    // And if we need scrollbar
+                    scrollbar: {
+                      el: '.swiper-scrollbar',
+                    },
+                  });
+            </script>
         </div>
     </main>
 {% endblock %}
