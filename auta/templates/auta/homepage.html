@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <title>Autíčka</title>
-</head>
-<body>
+{% extends "auta/base.html" %}
+{% block title %}{{ block.super }}{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="static/auta/homepage.css"/>
+    <script>
+        function formattedNumber(x) {
+            document.write(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
+        }
+    </script>
+{% endblock %}
+{% block content %}
     {% load static %}
     <main>
         <div>
-            <h1>Autíčkový web</h1>
+            <h1>Autogalaxie Brno</h1>
         </div>
         <div>
             <p>
@@ -23,6 +27,25 @@
             {% else %}
                 <p>Neexistuje žádné auto</p>
             {% endif %}
+            <br>
+            {% if auta_list %}
+                <div class="car_show">
+                    {% for auto in auta_list %}
+                    <div id="auto-{{auto.id}}" class="car_preview" onclick="window.location.href='/{{auto.id}}'" style="cursor: pointer;">
+                        <img src="static/auta/auto.jpeg"/>
+                        <div class="car_description">
+                            <h2>{{ auto.znacka }} {{ auto.model }}</h2>
+                            <h3>{{ auto.rok_vyroby }}</h3>
+                            <h4><script> 
+                                formattedNumber({{ auto.cena }})
+                            </script> Kč</h4>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Neexistuje žádné auto</p>
+            {% endif %}
         </div>
     </main>
-</body>
+{% endblock %}

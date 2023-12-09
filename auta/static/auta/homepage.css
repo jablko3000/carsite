@@ -1,40 +1,31 @@
-.car_description h2{
-
-}
-
-.car_description h3{
-    
-}
-
-.car_description h4{
-    
+.car_show{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .car_preview{
-    position: relative;
-    background-image: url("auto.jpeg");
-    background-size: contain;
-    background-position: center;
-    background-position: top;
-    border-radius: 18px;
-    width: 15rem;
-    height: 15rem;
-    margin: 2.5rem;
+  position: relative;
+  cursor: pointer;
+  border-radius: 18px;
+  width: 15rem;
+  height: 15rem;
+  margin: 3rem;
+}
+
+.car_preview img{
+  object-fit: cover;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 18px;
 }
 
 .car_description{
-    position: absolute;
-    bottom: 0;
-    width: 12.5rem;
-    height: 5rem;
-    padding: 20px;
-    backdrop-filter: blur(10px);
-    border-radius: 18px;
-    -webkit-mask: -webkit-gradient(
-    linear,
-    left 15%,
-    left 0%,
-    from(rgba(0, 0, 0, 1)),
-    to(rgba(0, 0, 0, 0))
-  );
+  position: absolute;
+  bottom: -50%;
+  width: 100%;
+  height: auto;
+
+  backdrop-filter: blur(10px);
+  mask: linear-gradient(to right, rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0) 100%);
 }

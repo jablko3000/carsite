@@ -7,7 +7,7 @@ from .models import Auto, Rezervace
 
 # Create your views here.
 class HomePageView(generic.ListView):
-    template_name = "auta/homepage2.html"
+    template_name = "auta/homepage.html"
     context_object_name = "auta_list"
     def get_queryset(self):
         return Auto.objects.all().order_by('-rok_vyroby')
