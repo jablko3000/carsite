@@ -54,32 +54,3 @@ section{
   color: #96c7e8;
   font-size: 70px;
 }
-#Home{
-  background: #fff;
-}
-#About{
-  background: #f2f2f2;
-}
-#Category{
-  background: #e6e6e6;
-}
-#Latest{
-  background: #fff;
-}
-#Contact{
-  background: #f2f2f2;
-}
-#Feedback{
-  background: #e6e6e6;
-}
-.button a{
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  color: #fff;
-  background: #2980b9;
-  padding: 7px 12px;;
-  font-size: 18px;
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.15);
-}

@@ -1,15 +1,9 @@
 <nav>
   <div class="navbar">
-    <div class="logo"><a href="#">Autogalaxie Brno</a></div>
+    <div class="logo"><a href="{%url 'auta:homepage'%}">Autogalaxie Brno</a></div>
     <ul class="menu">
-      <li><a href="#Home">Home</a></li>
-      <li><a href="#About">About</a></li>
-      <li><a href="#Category">Category</a></li>
-      <li><a href="#Contact">Contact</a></li>
-      <li><a href="#Feedback">Feedback</a></li>
+      <li><a href="{%url 'auta:homepage'%}">Naše nabídka</a></li>
+      <li><a href="{%url 'admin:index'%}">Admin</a></li>
     </ul>
   </div>
 </nav>
-<div class="button">
-  <a href="#Home"><i class="fa-solid fa-arrow-up"></i></a>
-</div>

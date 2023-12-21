@@ -14,6 +14,7 @@
     <main>
         <canvas></canvas>
         <div>
+          <h1>Naše nabídka</h1>
             {% if auta_list %}
                 <div class="car_show">
                     {% for auto in auta_list %}
@@ -116,7 +117,7 @@
         
         function loop() {
           requestAnimationFrame(loop);
-          CTX.fillStyle = "rgba(0,0,0,0.15)";
+          CTX.fillStyle = "rgba(18,18,18,0.15)";
           CTX.fillRect(0, 0, W, H);
           render();
         }

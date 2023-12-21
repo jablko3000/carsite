@@ -1,3 +1,10 @@
+h1{
+  font-size: 55px;
+  color: rgb(245, 245, 245);
+  text-align: center;
+  margin-top: -5vh;
+}
+
 .car_show{
   display: flex;
   flex-wrap: wrap;
@@ -8,25 +15,27 @@
   position: relative;
   cursor: pointer;
   border-radius: 18px;
-  width: 15rem;
-  height: 15rem;
+  width: 15vw;
+  height: 20vh;
   margin: 3rem;
   margin-bottom: 105px;
+  backdrop-filter: blur(100px);
 }
 
 .car_preview img{
   object-fit: cover;
-  width: 15rem;
-  height: 15rem;
+  width: 15vw;
+  height: 15vh;
   border-radius: 18px;
 }
 
 .car_description{
-  position: absolute;
-  bottom: -45%;
+  position: relative;
+  bottom: 0;
+  margin-bottom: 2vh;
   width: 100%;
   height: auto;
-  backdrop-filter: blur(10px);
+  color: rgb(245, 245, 245);
 }
 
 .car_description h3{
@@ -43,7 +52,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100vwS;
   height: 100vh;
   background-color: #000;
 }
