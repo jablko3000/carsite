@@ -5,52 +5,219 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-.koleno{
-    background-color: aquamarine;
-}
-nav{
- position: fixed;
- left: 0;
- top: 0;
- width: 100%;
- height: 75px;
- background: #2980b9;
- box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-nav .navbar{
- display: flex;
- align-items: center;
- justify-content: space-between;
- height: 100%;
- max-width: 90%;
- background: #2980b9;
- margin: auto;
-}
-nav .navbar .logo a{
-  color: #fff;
-  font-size: 27px;
-  font-weight: 600;
-  text-decoration: none;
-}
-nav .navbar .menu{
-  display: flex;
-}
-.navbar .menu li{
-  list-style: none;
-  margin: 0 15px;
-}
-.navbar .menu li a{
-  color: #fff;
-  font-size: 17px;
-  font-weight: 500;
-  text-decoration: none;
-}
-section{
-  display: flex;
-  height: 100vh;
+
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  padding: 20px 100px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  z-index: 99;
+  background-color: #162938;
+}
+
+.logo{
+  color: #fff;
+  font-size: 2rem;
+  user-select: none;
+}
+
+.navigation a{
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-left: 40px;
+  text-decoration: none;
+  position: relative;
+}
+
+.navigation a::after{
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .5s;
+}
+
+.navigation a:hover::after{
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.navigation .btnLogin-popup{
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-left: 40px;
+  width: 130px;
+  height: 50px;
+  background: transparent;
+  border: 2px solid #fff;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.navigation .btnLogin-popup:hover{
+  background: #fff;
+  color: #162938;
+}
+
+.wrapper{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  width: 400px;
+  height: 440px;
+  background: transparent;
+  border: 2px solid rgba(0,0,0,0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  z-index: 98;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  display: flex;
   justify-content: center;
-  color: #96c7e8;
-  font-size: 70px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.wrapper .form-box{
+  width: 100%;
+  padding: 40px;
+}
+
+.wrapper .icon-close{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  background: #162938;
+  font-size: 2rem;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.form-box h2{
+  font-size: 2rem;
+  color: #162938;
+  text-align: center;
+}
+
+.input-box{
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid #162938;
+  margin: 30px 0;
+}
+
+.input-box label{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  font-size: 1rem;
+  transform: translateY(-50%);
+  color: #162938;
+  pointer-events: none;
+  font-weight: 500;
+  transition: .5s;
+}
+
+.input-box input:focus~label,
+.input-box input:not(:placeholder-shown)~label {
+  top: -5px;
+  left: 5px;
+  color: #162938;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.input-box input{
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #162938;
+  font-weight: 500;
+  padding: 0 35px 0 5px;
+}
+
+.input-box .icon{
+  position: absolute;
+  right: 8px;
+  font-size: 1.2rem;
+  color: #162938;
+  line-height: 57px;
+}
+
+.remember{
+  font-size: .9rem;
+  color: #162938;
+  font-weight: 500;
+  margin: -15px 0 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.remember label input{
+  accent-color: #162938;
+  margin-right: 3px;
+}
+
+.remember a{
+  color: #162938;
+  text-decoration: none;
+}
+
+.remember a:hover{
+  text-decoration: underline;
+}
+
+.btn{
+  width: 100%;
+  height: 45px;
+  background: #162938;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+.login-register{
+  font-size: .9rem;
+  color: #162938;
+  text-align: center;
+  font-weight: 500;
+  margin: 25px 0 10px;
+}
+
+.login-register p a{
+  color: #162938;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-register p a:hover{
+  text-decoration: underline;
 }
