@@ -1,9 +1,13 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views import generic
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime, timedelta
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.urls import reverse
 
 from .models import Auto, Rezervace
+from django.contrib.auth.models import User
 
 # Create your views here.
 class HomePageView(generic.ListView):
@@ -11,6 +15,12 @@ class HomePageView(generic.ListView):
     context_object_name = "auta_list"
     def get_queryset(self):
         return Auto.objects.all().order_by('-rok_vyroby')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['show_popup'] = self.request.GET.get('show_popup', False)
+        context['email'] = self.request.GET.get('email', "")
+        context['error_message'] = self.request.GET.get('error_message', "")
+        return context
     
 class DetailView(generic.DetailView):
     model = Auto
@@ -19,6 +29,13 @@ class DetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['aktualni_datum_a_cas'] = datetime.now().strftime('%Y-%m-%dT%H:%M')
         return context
+    
+def car_view(request, auto_id):
+    try:
+        auto = Auto.objects.get(pk=auto_id)
+    except Auto.DoesNotExist:
+        raise Http404("Auto neexistuje")
+    return render(request, 'auta/detail.html', {"auto": auto})
 
 def reserve(request, auto_id):
     auto = get_object_or_404(Auto, pk = auto_id)
@@ -56,3 +73,36 @@ def reserve(request, auto_id):
 
     # Pokud žádost nebyla metoda POST nebo pokud datum_a_cas nebylo definováno, zobrazte formulář.
     return render(request, 'auta/detail.html', {"auto": auto, "error_message": "Rezervace nebyla provedena.", 'aktualni_datum_a_cas' : datum_a_cas.strftime('%Y-%m-%dT%H:%M')})
+
+def user_login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get("password")
+        try:
+            username = User.objects.get(email=email)
+        except:
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&email=' + email + '&error_message=Neplatné přihlašovací údaje.')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně přihlášeno.')
+        else:
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&email=' + email + '&error_message=Neplatné přihlašovací údaje.')
+    
+def user_logout(request):
+    if request.method == 'POST':
+        logout(request)
+        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně odhlášeno.')
+
+
+
+
+def register(request):
+    email = request.POST["email"]
+    password = request.POST["password"]
+    user = User.objects.create_user(email, email, password)
+    if user is not None:
+        login(request, user)
+        return HttpResponse("Registrace byla úspěšná.")
+    else:
+        return HttpResponse("Neplatné registrační údaje.")

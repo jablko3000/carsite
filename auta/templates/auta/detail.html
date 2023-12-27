@@ -1,11 +1,25 @@
+{% extends "auta/base.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="/static/homepage.css"/>
+    <link rel="stylesheet" href="/static/swiper.css"/>
+    <script>
+        function formattedNumber(x) {
+            document.write(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
+        }
+    </script>
+{% endblock %}
+{% block title %}{{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }} | {{ block.super }}{% endblock %}
+{% block content %}
 <a href="{% url 'auta:homepage' %}">Zpět na hlavní stránku</a>
 <form action="{% url 'auta:reserve' auto.id %}" method="post">
     {% csrf_token %}
     <fieldset>
-        <legend><h1>{{ auto.rok_vyroby }} {{ auto.znacka }} {{ auto.model }}</h1></legend>
+        <legend><h1>{{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }}</h1></legend>
         <h2>Vyberte si termín rezervace prohlídky/ukázkové jízdy vybraného vozidla.</h2>
         {% if error_message %}<p style=color:rgb(188,36,36)><strong>{{ error_message }}</strong></p>{% endif %}
         <input type="datetime-local" id='datum_a_cas' name="datum_a_cas" value="{{ aktualni_datum_a_cas }}">
     </fieldset>
     <input type="submit" value="Rezervovat">
     </form>
+{% endblock %}

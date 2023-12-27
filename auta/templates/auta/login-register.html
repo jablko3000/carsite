@@ -1,0 +1,99 @@
+<div class="wrapper">
+    <span class="icon-close"><ion-icon name="close"></ion-icon></span>
+
+    <div class="form-box login" >
+      <h2>Přihlásit se</h2>
+      <form action="{% url 'auta:user_login' %}" method="post">
+        {% csrf_token %}
+        <div class="input-box">
+          <span class="icon"><ion-icon name="mail"></ion-icon></span>
+          <input type="email" name="email" id="email" required placeholder="" autocomplete="email">
+          <label>E-mail</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+          <input type="password" name="password" id="password" required placeholder="" autocomplete="current-password">
+          <label>Heslo</label>
+        </div>
+        <div class="remember">
+          <label><input type="checkbox">Zapamatovat si mě</label>
+          <a href="#">Zapomenuté heslo?</a>
+        </div>
+        <button type="submit" class="btn">Přihlásit se</button>
+        <div class="login-register">
+          <p>Nemáte účet? <a href="#" class="register-link">Registrovat se</a></p>
+        </div>
+      </form>
+    </div>
+  
+    <div class="form-box register" >
+      <h2>Registrovat se</h2>
+      <form action="#">
+        {% csrf_token %}
+        <input type="text" id="autofill-if-you-dare" style="position: absolute; z-index: -1; top: 20px; width: 0; height:0; display: none;" />
+        <div class="input-box">
+            <span class="icon"><ion-icon name="person"></ion-icon></span>
+            <input type="text" required placeholder="" autocomplete="name">
+            <label>Jméno a příjmení</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><ion-icon name="mail"></ion-icon></span>
+          <input type="email" required placeholder="" autocomplete="email">
+          <label>E-mail</label>
+        </div>
+        <div class="input-box">
+            <span class="icon"><ion-icon name="call"></ion-icon></span>
+            <input type="text" required placeholder="" autocomplete="tel">
+            <label>Telefon</label>
+        </div>
+        <div class="input-box">
+          <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+          <input type="password" required placeholder="" autocomplete="new-password" >
+          <label>Heslo</label>
+        </div>
+        <div class="input-box">
+            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+            <input type="password" required placeholder="" autocomplete="new-password">
+            <label>Potvrzení hesla</label>
+          </div>
+        <button type="submit" class="btn">Register</button>
+        <div class="login-register">
+          <p>Již máte účet? <a href="#" class="login-link">Přihlásit se</a></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="form-box logout">
+        <h2>Opravdu se chcete odhlásit?</h2>
+        <form action="{% url 'auta:user_logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn">Odhlásit se</button>
+        </form>
+    </div>
+    
+</div>
+<div class="background"></div>
+
+
+
+  
+<script src="/static/login-register.js"></script>
+<script>
+    window.onload = function() {
+        var show_popup = "{{ show_popup }}";
+        if (show_popup == "True") {
+            wrapper.classList.add('active-popup');
+            background.classList.add('active');
+        }
+        var email = "{{ email }}";
+        if (email != "") {
+            document.getElementById("email").value = email;
+        }
+        var error_message = "{{ error_message }}";
+        if (error_message != "") {
+            alert(error_message);
+        }
+    };
+</script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
