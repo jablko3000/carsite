@@ -27,40 +27,39 @@
     </div>
   
     <div class="form-box register" >
-      <h2>Registrovat se</h2>
-      <form action="#">
-        {% csrf_token %}
-        <input type="text" id="autofill-if-you-dare" style="position: absolute; z-index: -1; top: 20px; width: 0; height:0; display: none;" />
-        <div class="input-box">
-            <span class="icon"><ion-icon name="person"></ion-icon></span>
-            <input type="text" required placeholder="" autocomplete="name">
-            <label>Jméno a příjmení</label>
-        </div>
-        <div class="input-box">
-          <span class="icon"><ion-icon name="mail"></ion-icon></span>
-          <input type="email" required placeholder="" autocomplete="email">
-          <label>E-mail</label>
-        </div>
-        <div class="input-box">
-            <span class="icon"><ion-icon name="call"></ion-icon></span>
-            <input type="text" required placeholder="" autocomplete="tel">
-            <label>Telefon</label>
-        </div>
-        <div class="input-box">
-          <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-          <input type="password" required placeholder="" autocomplete="new-password" >
-          <label>Heslo</label>
-        </div>
-        <div class="input-box">
+        <h2>Registrovat se</h2>
+        <form action="{% url 'auta:user_register' %}" method="post">
+            {% csrf_token %}
+            <div class="input-box">
+                <span class="icon"><ion-icon name="person"></ion-icon></span>
+                <input type="text" name="full_name" id="full_name" required placeholder="" autocomplete="name">
+                <label>Jméno a příjmení</label>
+            </div>
+            <div class="input-box">
+            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+            <input type="email" name="email" id="email" required placeholder="" autocomplete="email">
+            <label>E-mail</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="call"></ion-icon></span>
+                <input type="text" name="phone" id="phone" required placeholder="" autocomplete="tel">
+                <label>Telefon</label>
+            </div>
+            <div class="input-box">
             <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-            <input type="password" required placeholder="" autocomplete="new-password">
-            <label>Potvrzení hesla</label>
-          </div>
-        <button type="submit" class="btn">Register</button>
-        <div class="login-register">
-          <p>Již máte účet? <a href="#" class="login-link">Přihlásit se</a></p>
-        </div>
-      </form>
+            <input type="password" name="password1" id="password1" required placeholder="" autocomplete="new-password" >
+            <label>Heslo</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="password2" id="password2" required placeholder="" autocomplete="new-password">
+                <label>Potvrzení hesla</label>
+            </div>
+            <button type="submit" class="btn">Registrovat se</button>
+            <div class="login-register">
+            <p>Již máte účet? <a href="#" class="login-link">Přihlásit se</a></p>
+            </div>
+        </form>
     </div>
 
     <div class="form-box logout">
@@ -92,6 +91,14 @@
         var error_message = "{{ error_message }}";
         if (error_message != "") {
             alert(error_message);
+        }
+        var register = "{{ register }}";
+        if (register == "True") {
+            wrapper.classList.add('active');
+        }
+        if (window.history.replaceState) {
+            var clean_url = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({}, document.title, clean_url);
         }
     };
 </script>

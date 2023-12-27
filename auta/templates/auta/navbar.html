@@ -2,8 +2,10 @@
   <h2 class="logo">Autogalaxie Brno</h2>
   <nav class="navigation">
     <a href="{%url 'auta:homepage'%}">Naše nabídka</a>
-    {%if user.is_authenticated%}
+    {% if user.is_staff %}
       <a href="{%url 'admin:index'%}">Admin</a>
+    {% endif %}
+    {%if user.is_authenticated%}
       <button class="btnLogout-popup">Odhlásit se</button>
     {%else%}
       <button class="btnLogin-popup">Přihlásit se</button>
