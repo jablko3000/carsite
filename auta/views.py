@@ -14,7 +14,7 @@ class HomePageView(generic.ListView):
     template_name = "auta/homepage.html"
     context_object_name = "auta_list"
     def get_queryset(self):
-        return Auto.objects.all().order_by('-rok_vyroby')
+        return Auto.objects.all().order_by('-datum_nabidky')
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['show_popup'] = self.request.GET.get('show_popup', False)

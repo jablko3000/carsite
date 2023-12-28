@@ -6,6 +6,10 @@
   font-family: 'Poppins', sans-serif;
 }
 
+.navbar{
+  margin-bottom: 90px;
+}
+
 header{
   position: fixed;
   top: 0;

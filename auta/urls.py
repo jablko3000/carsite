@@ -6,10 +6,10 @@ from . import views
 app_name = "auta"
 urlpatterns = [
     path("", views.HomePageView.as_view(), name="homepage"),
-    path("<int:auto_id>/", views.car_view, name="detail"),
-    path("<int:auto_id>/reserve/", views.reserve, name="reserve"),
+    path("auto/<int:auto_id>/", views.car_view, name="detail"),
+    path("auto/<int:auto_id>/reserve/", views.reserve, name="reserve"),
     path("login/", views.user_login, name="user_login"),
     path("logout/", views.user_logout, name="user_logout"),
     path("register/", views.user_register, name="user_register"),
-    re_path(r'^.*$', RedirectView.as_view(url='/', permanent=True), name='index'),
+    #re_path(r'^.*$', RedirectView.as_view(url='/', permanent=True), name='index'),
 ]

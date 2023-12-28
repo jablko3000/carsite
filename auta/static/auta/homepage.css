@@ -24,7 +24,6 @@ h1{
   height: 20vh;
   margin: 3rem;
   margin-bottom: 105px;
-  backdrop-filter: blur(100px);
   min-width: 200px;
   min-height: 200px;
   transition: 0.5s;

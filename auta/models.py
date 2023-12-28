@@ -63,6 +63,7 @@ class Auto(models.Model):
     rok_vyroby = models.IntegerField(validators=[MinValueValidator(1880), MaxValueValidator(2050)])
     cena = models.IntegerField(validators=[MinValueValidator(0)])
     img = models.CharField(max_length = 200)
+    datum_nabidky = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return f"Auto značky {self.znacka}, modelu {self.model}, z roku {self.rok_vyroby}"
     
