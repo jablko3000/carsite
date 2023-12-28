@@ -17,8 +17,12 @@
               <div class="car_show">
                   {% for auto in auta_list %}
                   <div id="auto-{{auto.id}}" class="car_preview" onclick="window.location.href='{% url 'auta:detail' auto.id %}'" style="cursor: pointer;">
-                      <img src="{{auto.img}}" alt="Obrázek {{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }} se nepodařilo načíst">
-                      <div class="car_description">
+                    {% if auto.images %}
+                        <img src="{{ auto.images.0.url }}" alt="Obrázek {{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }}">
+                    {% else %}
+                        <img src="{% static 'auto.jpeg' %}" alt="Obrázek {{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }} hhhhhhhhhhh">
+                    {% endif %}
+                        <div class="car_description">
                           <h2>{{ auto.znacka }} {{ auto.model }}</h2>
                           <h3>{{ auto.rok_vyroby }}</h3>
                           <h4><script> 

@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 
-from .models import Auto, Rezervace, CustomUser
+from .models import Auto, Rezervace, CustomUser, Image, Note
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -22,7 +22,28 @@ class HomePageView(generic.ListView):
         context['error_message'] = self.request.GET.get('error_message', "")
         context['register'] = self.request.GET.get('register', False)
         return context
-    
+
+def homepage_view(request):
+    auta_list = Auto.objects.all().order_by('-datum_nabidky')
+    show_popup = request.GET.get('show_popup', False)
+    email = request.GET.get('email', "")
+    error_message = request.GET.get('error_message', "")
+    register = request.GET.get('register', False)
+
+    for auto in auta_list:
+        auto.images = Image.objects.filter(auto_id=auto.id).order_by('order')
+        auto.notes = Note.objects.filter(auto_id=auto.id).order_by('order')
+
+    context = {
+        'auta_list': auta_list,
+        'show_popup': show_popup,
+        'email': email,
+        'error_message': error_message,
+        'register': register,
+    }
+
+    return render(request, 'auta/homepage.html', context)
+
 class DetailView(generic.DetailView):
     model = Auto
     template_name = "auta/detail.html"
@@ -31,7 +52,7 @@ class DetailView(generic.DetailView):
         context['aktualni_datum_a_cas'] = datetime.now().strftime('%Y-%m-%dT%H:%M')
         return context
     
-def car_view(request, auto_id):
+def detail_view(request, auto_id):
     try:
         auto = Auto.objects.get(pk=auto_id)
     except Auto.DoesNotExist:

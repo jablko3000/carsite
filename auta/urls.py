@@ -5,8 +5,8 @@ from . import views
 
 app_name = "auta"
 urlpatterns = [
-    path("", views.HomePageView.as_view(), name="homepage"),
-    path("auto/<int:auto_id>/", views.car_view, name="detail"),
+    path("", views.homepage_view, name="homepage"),
+    path("auto/<int:auto_id>/", views.detail_view, name="detail"),
     path("auto/<int:auto_id>/reserve/", views.reserve, name="reserve"),
     path("login/", views.user_login, name="user_login"),
     path("logout/", views.user_logout, name="user_logout"),

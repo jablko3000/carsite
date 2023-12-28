@@ -58,14 +58,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return f"Uživatel {self.full_name} s emailem {self.email}"
 
 class Auto(models.Model):
-    znacka = models.CharField(max_length = 50)
-    model = models.CharField(max_length = 200)
+    znacka = models.CharField(max_length=50)
+    model = models.CharField(max_length=200)
     rok_vyroby = models.IntegerField(validators=[MinValueValidator(1880), MaxValueValidator(2050)])
     cena = models.IntegerField(validators=[MinValueValidator(0)])
-    img = models.CharField(max_length = 200)
+    img = models.CharField(max_length=200)
     datum_nabidky = models.DateTimeField(default=timezone.now)
+    
     def __str__(self):
-        return f"Auto značky {self.znacka}, modelu {self.model}, z roku {self.rok_vyroby}"
+        return f"{self.znacka} {self.model} {self.rok_vyroby}"
     
     class Meta:
         verbose_name = 'Auto'
@@ -74,9 +75,32 @@ class Auto(models.Model):
 class Rezervace(models.Model):
     auto = models.ForeignKey(Auto, on_delete=models.CASCADE)
     datum_a_cas = models.DateTimeField()
+    
     def __str__(self):
         return f"Rezervace pro {self.auto} - {self.datum_a_cas}"
     
     class Meta:
         verbose_name = 'Rezervace'
         verbose_name_plural = 'Rezervace'
+
+class Image(models.Model):
+    auto_id = models.ForeignKey(Auto, on_delete=models.CASCADE)
+    url = models.CharField(max_length=200)
+    order = models.IntegerField(default=0)
+    class Meta:
+        verbose_name = 'Obrázek'
+        verbose_name_plural = 'Obrázky'
+
+    def __str__(self):
+        return f"Obrázek pro {self.auto_id}"
+
+class Note(models.Model):
+    auto_id = models.ForeignKey(Auto, on_delete=models.CASCADE)
+    content = models.CharField(max_length=1500)
+    order = models.IntegerField(default=0)
+    class Meta:
+        verbose_name = 'Poznámka'
+        verbose_name_plural = 'Poznámky'
+
+    def __str__(self):
+        return f"Poznámka pro {self.auto_id}"
