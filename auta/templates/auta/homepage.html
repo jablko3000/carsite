@@ -2,7 +2,6 @@
 {% block title %}{{ block.super }}{% endblock %}
 {% block head %}
     <link rel="stylesheet" href="/static/homepage.css"/>
-    <link rel="stylesheet" href="/static/swiper.css"/>
     <script>
         function formattedNumber(x) {
             document.write(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
@@ -20,7 +19,7 @@
                     {% if auto.images %}
                         <img src="{{ auto.images.0.url }}" alt="Obrázek {{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }}">
                     {% else %}
-                        <img src="{% static 'auto.jpeg' %}" alt="Obrázek {{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }} hhhhhhhhhhh">
+                        <img src="{% static 'auto.jpeg' %}" alt="Obrázek {{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }}">
                     {% endif %}
                         <div class="car_description">
                           <h2>{{ auto.znacka }} {{ auto.model }}</h2>

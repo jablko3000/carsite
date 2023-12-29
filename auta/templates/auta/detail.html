@@ -1,25 +1,52 @@
 {% extends "auta/base.html" %}
 {% load static %}
 {% block head %}
-    <link rel="stylesheet" href="/static/homepage.css"/>
-    <link rel="stylesheet" href="/static/swiper.css"/>
-    <script>
-        function formattedNumber(x) {
-            document.write(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
-        }
-    </script>
+    <link rel="stylesheet" href="/static/detail.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 {% endblock %}
 {% block title %}{{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }} | {{ block.super }}{% endblock %}
 {% block content %}
-<a href="{% url 'auta:homepage' %}">Zpět na hlavní stránku</a>
-<form action="{% url 'auta:reserve' auto.id %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend><h1>{{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }}</h1></legend>
-        <h2>Vyberte si termín rezervace prohlídky/ukázkové jízdy vybraného vozidla.</h2>
-        {% if error_message %}<p style=color:rgb(188,36,36)><strong>{{ error_message }}</strong></p>{% endif %}
-        <input type="datetime-local" id='datum_a_cas' name="datum_a_cas" value="{{ aktualni_datum_a_cas }}">
-    </fieldset>
-    <input type="submit" value="Rezervovat">
-    </form>
+<div class="detail">
+    <p>Rezervace prohlídky/ukázkové jízdy</p>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {% for image in auto.images %}
+                <div class="swiper-slide">
+                    <img src="{{ image.url }}" alt="Image" style="cursor: pointer;">
+                </div>
+            {% endfor %}
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+        </script>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <form action="{% url 'auta:reserve' auto.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>{{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }}</h1></legend>
+            <h2>Vyberte si termín rezervace prohlídky/ukázkové jízdy vybraného vozidla.</h2>
+            {% if error_message %}<p style=color:rgb(188,36,36)><strong>{{ error_message }}</strong></p>{% endif %}
+            <input type="datetime-local" id='datum_a_cas' name="datum_a_cas" value="{{ aktualni_datum_a_cas }}">
+        </fieldset>
+        <input type="submit" value="Rezervovat">
+        </form>
+</div>
 {% endblock %}

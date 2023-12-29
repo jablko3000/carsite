@@ -57,7 +57,12 @@ def detail_view(request, auto_id):
         auto = Auto.objects.get(pk=auto_id)
     except Auto.DoesNotExist:
         raise Http404("Auto neexistuje")
-    return render(request, 'auta/detail.html', {"auto": auto})
+    auto.images = Image.objects.filter(auto_id=auto.id).order_by('order')
+    context = {
+        'auto': auto,
+        'auto.images': auto.images,
+    }
+    return render(request, 'auta/detail.html', context)
 
 def reserve(request, auto_id):
     auto = get_object_or_404(Auto, pk = auto_id)

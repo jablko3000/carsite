@@ -62,7 +62,6 @@ class Auto(models.Model):
     model = models.CharField(max_length=200)
     rok_vyroby = models.IntegerField(validators=[MinValueValidator(1880), MaxValueValidator(2050)])
     cena = models.IntegerField(validators=[MinValueValidator(0)])
-    img = models.CharField(max_length=200)
     datum_nabidky = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
@@ -86,7 +85,7 @@ class Rezervace(models.Model):
 class Image(models.Model):
     auto_id = models.ForeignKey(Auto, on_delete=models.CASCADE)
     url = models.CharField(max_length=200)
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=1)
     class Meta:
         verbose_name = 'Obrázek'
         verbose_name_plural = 'Obrázky'
@@ -97,7 +96,7 @@ class Image(models.Model):
 class Note(models.Model):
     auto_id = models.ForeignKey(Auto, on_delete=models.CASCADE)
     content = models.CharField(max_length=1500)
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=1)
     class Meta:
         verbose_name = 'Poznámka'
         verbose_name_plural = 'Poznámky'
