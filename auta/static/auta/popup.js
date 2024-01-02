@@ -7,16 +7,20 @@ const iconClose = document.querySelector('.icon-close');
 const background = document.querySelector('.background');
 
 registerLink.addEventListener('click', () => {
-    wrapper.classList.add('active');
+    wrapper.classList.add('register');
+    wrapper.classList.remove('login');
 });
 
 loginLink.addEventListener('click', () => {
-    wrapper.classList.remove('active');
+    wrapper.classList.remove('register');
+    wrapper.classList.add('login');
 });
 
 try{
     btnLoginPopup.addEventListener('click', () => {
         wrapper.classList.add('active-popup');
+        wrapper.classList.add('login');
+        wrapper.classList.remove('register');
         background.classList.add('active');
     });
 }

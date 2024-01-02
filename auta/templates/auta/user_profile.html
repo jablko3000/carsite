@@ -1,0 +1,31 @@
+{% extends "auta/base.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="/static/user_profile.css"/>
+{% endblock %}
+{% block content %}
+<div class="profile">
+    <table>
+        <tr>
+            <th>Jméno</th>
+            <td>{{ user.full_name }}</td>
+            <td><a href="{% url 'auta:user_profile' %}">Změnit</a></td>
+        </tr>
+        <tr>
+            <th>E-mail</th>
+            <td>{{ user.email }}</td>
+            <td><a href="{% url 'auta:user_profile' %}">Změnit</a></td>
+        </tr>
+        <tr>
+            <th>Heslo</th>
+            <td>••••••••••</td>
+            <td><a href="{% url 'auta:user_profile' %}">Změnit</a></td>
+        </tr>
+        <tr>
+            <th>Telefon</th>
+            <td>{{ user.phone }}</td>
+            <td><a href="{% url 'auta:user_profile' %}">Změnit</a></td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

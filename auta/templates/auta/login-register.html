@@ -20,8 +20,8 @@
           <a href="#">Zapomenuté heslo?</a>
         </div>
         <button type="submit" class="btn">Přihlásit se</button>
-        <div class="login-register">
-          <p>Nemáte účet? <a href="#" class="register-link">Registrovat se</a></p>
+        <div class="popup">
+          <p>Nemáte účet? <a class="register-link" style="cursor: pointer;">Registrovat se</a></p>
         </div>
       </form>
     </div>
@@ -56,8 +56,8 @@
                 <label>Potvrzení hesla</label>
             </div>
             <button type="submit" class="btn">Registrovat se</button>
-            <div class="login-register">
-            <p>Již máte účet? <a href="#" class="login-link">Přihlásit se</a></p>
+            <div class="popup">
+            <p>Již máte účet? <a class="login-link" style="cursor: pointer;">Přihlásit se</a></p>
             </div>
         </form>
     </div>
@@ -76,7 +76,7 @@
 
 
   
-<script src="/static/login-register.js"></script>
+<script src="/static/popup.js"></script>
 <script>
     window.onload = function() {
         var show_popup = "{{ show_popup }}";

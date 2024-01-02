@@ -23,9 +23,11 @@
 
 .wrapper{
     position: fixed;
-    width: 30vw;
-    height: 55vh;
-    transform: translateY(50%);
+    width: 40vw;
+    height: 75vh;
+    min-height: 370px;
+    min-width: 395px;
+    top: -40vh;
     background: transparent;
     border: 2px solid rgba(0,0,0,0.5);
     border-radius: 20px;
@@ -36,7 +38,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
     transition: opacity .5s ease, height .25s ease, transform .25s ease;
     opacity: 0;
     scale: 0;
@@ -48,10 +50,11 @@
     scale: 1;
 }
 
-.wrapper.active{
-    height: 85vh;
-    transform: translateY(66%);
+.wrapper.register{
+    min-height: 585px;
+
 }
+
   
 .wrapper .form-box{
     width: 100%;
@@ -59,34 +62,29 @@
 }
   
 .wrapper .form-box.login{
+    position: absolute;
+    transform: translateX(-100vw);
+}
+
+.wrapper.login .form-box.login{
     transition: transform 0.18s ease;
     transform: translateX(0px);
-}
-
-.wrapper.active .form-box.login{
-    transition: none;
-    transform: translateX(-40vw);
-}
-
-.wrapper.logout .form-box.login{
-    transition: none;
-    transform: translateX(-40vw);
 }
   
 .wrapper .form-box.register{
     position: absolute;
-    transform: translateX(40vw);
- }
+    transform: translateX(100vw);
+}
 
-.wrapper.active .form-box.register{
+.wrapper.register .form-box.register{
     transition: transform 0.18s ease;
     transform: translateX(0px);
 }
 
 .wrapper .form-box.logout{
     position: absolute;
-    transform: translateX(40vw);
- }
+    transform: translateX(100vw);
+}
 
 .wrapper.logout .form-box.logout{
     transition: transform 0.18s ease;
@@ -201,7 +199,7 @@
     font-weight: 500;
 }
   
-.login-register{
+.popup{
     font-size: .9rem;
     color: #162938;
     text-align: center;
@@ -209,12 +207,20 @@
     margin: 25px 0 10px;
 }
   
-.login-register p a{
+.popup p a{
     color: #162938;
     text-decoration: none;
     font-weight: 600;
 }
   
-.login-register p a:hover{
+.popup p a:hover{
     text-decoration: underline;
+}
+
+@media (max-width: 1000px) {
+    .wrapper{
+        width: 100vw;
+        height: 85vh;
+        top: -50vh;
+    }
 }

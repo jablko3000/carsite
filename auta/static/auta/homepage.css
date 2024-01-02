@@ -41,6 +41,7 @@ h1{
   border-radius: 18px;
   min-width: 200px;
   min-height: 200px;
+  background: white;
 }
 
 .car_description{
@@ -59,4 +60,43 @@ h1{
 
 .car_description h4{
   font-size: 22px;
+}
+
+@media (max-width: 1000px){
+  .car_preview{
+    width: 40vw;
+    height: fit-content;
+    margin: 5vw;
+    min-width: 200px;
+    min-height: 200px;
+  }
+
+  .car_preview img{
+    width: 40vw;
+    height: auto;
+  }
+
+}
+
+@media (max-width: 600px){
+  .car_preview{
+    width: 90vw;
+    height: fit-content;
+    margin: 5vw;
+    min-width: 200px;
+    min-height: 200px;
+  }
+
+  .car_preview img{
+    width: 90vw;
+    height: auto;
+  }
+
+  .car_description h3{
+    font-size: 20px;
+  }
+
+  .car_description h4{
+    font-size: 18px;
+  }
 }

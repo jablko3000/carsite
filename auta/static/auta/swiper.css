@@ -16,7 +16,7 @@
 }
 
 .swiper-slide img {
-  width: 50vw;
+  width: 100%;
   height: 48vh;
   object-fit: contain;
   cursor: zoom-in;

@@ -81,3 +81,8 @@ def user_register(request):
                 return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně zaregistrováno.')
     else:
         return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Aj, Chyba!&register=True')
+
+@login_required
+def user_profile(request):
+    user = request.user
+    return render(request, 'auta/user_profile.html', {'user': user})
