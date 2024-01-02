@@ -2,3 +2,64 @@
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
+h1{
+    position: relative;
+    font-size: 40px;
+    font-weight: 600;
+    margin: 0 0 0 5vw;
+    bottom: 10vh;
+    backdrop-filter: blur(20px);
+    z-index: 5;
+    width: fit-content;
+    border-radius: 18px;
+}
+
+h2{
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.tech-params{
+    display: flex;
+    justify-content: center;
+}
+
+.tech-params table{
+    border: 0 transparent;
+    border-collapse: collapse;
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+    margin-right: 5vw;
+}
+
+.tech-params table th{
+    min-width: 200px;
+    padding: 0 14px 13px 0;
+    border: 0 transparent;
+    background-color: transparent;
+    vertical-align: top;
+    text-align: left;
+    box-sizing: border-box;
+    font-size: 20px;
+    color: #484848;
+}
+
+.tech-params table td{
+    padding: 0 14px 13px 0;
+    border: 0 transparent;
+    background-color: transparent;
+    vertical-align: top;
+    text-align: left;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+.tech-params p{
+    font-size: 20px;
+    margin-left: 5vw;
+    text-align: left;
+}

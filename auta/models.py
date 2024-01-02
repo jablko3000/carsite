@@ -63,6 +63,12 @@ class Auto(models.Model):
     rok_vyroby = models.IntegerField(validators=[MinValueValidator(1880), MaxValueValidator(2050)])
     cena = models.IntegerField(validators=[MinValueValidator(0)])
     datum_nabidky = models.DateTimeField(default=timezone.now)
+    stav_tachometru = models.IntegerField(validators=[MinValueValidator(0)])
+    palivo = models.CharField(max_length=25)
+    barva = models.CharField(max_length=25)
+    prevodovka = models.CharField(max_length=50)
+    motor = models.CharField(max_length=75)
+    popis = models.CharField(max_length=1000)
     
     def __str__(self):
         return f"{self.znacka} {self.model} {self.rok_vyroby}"

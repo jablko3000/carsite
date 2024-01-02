@@ -2,51 +2,66 @@
 {% load static %}
 {% block head %}
     <link rel="stylesheet" href="/static/detail.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/static/swiper.css">
 {% endblock %}
 {% block title %}{{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }} | {{ block.super }}{% endblock %}
 {% block content %}
 <div class="detail">
-    <p>Rezervace prohlídky/ukázkové jízdy</p>
-    <div class="swiper-container">
+    <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-            {% for image in auto.images %}
+          {% for image in auto.images %}
                 <div class="swiper-slide">
                     <img src="{{ image.url }}" alt="Image" style="cursor: pointer;">
                 </div>
             {% endfor %}
         </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-        <!-- Add Navigation -->
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
-    </div>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <div class="swiper-pagination"></div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        var swiper = new Swiper('.swiper-container', {
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
             pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
+              el: ".swiper-pagination",
+              clickable: true,
             },
-        });
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
         </script>
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-    <form action="{% url 'auta:reserve' auto.id %}" method="post">
-        {% csrf_token %}
-        <fieldset>
-            <legend><h1>{{ auto.znacka }} {{ auto.model }} {{ auto.rok_vyroby }}</h1></legend>
-            <h2>Vyberte si termín rezervace prohlídky/ukázkové jízdy vybraného vozidla.</h2>
-            {% if error_message %}<p style=color:rgb(188,36,36)><strong>{{ error_message }}</strong></p>{% endif %}
-            <input type="datetime-local" id='datum_a_cas' name="datum_a_cas" value="{{ aktualni_datum_a_cas }}">
-        </fieldset>
-        <input type="submit" value="Rezervovat">
-        </form>
+    <h1>{{ auto.znacka }} {{ auto.model }}, {{ auto.rok_vyroby }}</h1>
+    <h2>Technické parametry</h2>
+    <div class="tech-params">
+        <table>
+            <tr>
+                <th>Rok uvedení do provozu</th>
+                <td>{{ auto.rok_vyroby }}</td>
+            </tr>
+            <tr>
+                <th>Stav tachometru</th>
+                <td><script>formattedNumber({{ auto.stav_tachometru }})</script> Km</td>
+            </tr>
+            <tr>
+                <th>Palivo</th>
+                <td>{{ auto.palivo }}</td>
+            </tr>
+            <tr>
+                <th>Barva</th>
+                <td>{{ auto.barva }}</td>
+            </tr>
+            <tr>
+                <th>Převodovka</th>
+                <td>{{ auto.prevodovka }}</td>
+            </tr>
+        </table>
+        <p>{{ auto.popis }}</p>
+    </div>
 </div>
 {% endblock %}

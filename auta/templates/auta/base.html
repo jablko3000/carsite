@@ -9,8 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     {% block head%}{% endblock head %}
     <title>{% block title %}Autogalaxie Brno{% endblock title %}</title>
+    <script>
+        function formattedNumber(x) {
+            document.write(x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
+        }    
+    </script>
 </head>
 <body>
+
     <main>
     <div id="navbar" class="navbar">{% include "auta/navbar.html" %}</div>
     <div id="login-register-form" class="login-register-form">{% include "auta/login-register.html" %}</div>
