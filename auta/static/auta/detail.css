@@ -121,7 +121,7 @@ h2{
         display: block;
         text-align: center;
     }
-    .tech-params.table-div{
-        margin-bottom: 3vh;
+    .tech-params{
+        flex-direction: column;
     }
 }

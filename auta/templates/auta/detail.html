@@ -51,35 +51,30 @@
     </div>
     <h2>Technické parametry</h2>
     <div class="tech-params">
-        <div class="tech-params big">
-            <div class="tech-params table-div">
-                <table>
-                    <tr>
-                        <th>Rok uvedení do provozu</th>
-                        <td>{{ auto.rok_vyroby }}</td>
-                    </tr>
-                    <tr>
-                        <th>Stav tachometru</th>
-                        <td><script>formattedNumber({{ auto.stav_tachometru }})</script> Km</td>
-                    </tr>
-                    <tr>
-                        <th>Palivo</th>
-                        <td>{{ auto.palivo }}</td>
-                    </tr>
-                    <tr>
-                        <th>Barva</th>
-                        <td>{{ auto.barva }}</td>
-                    </tr>
-                    <tr>
-                        <th>Převodovka</th>
-                        <td>{{ auto.prevodovka }}</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="tech-params note-div">
-                <p>{{ auto.popis }}</p>
-        </div>
-    </div>
+        <table>
+            <tr>
+                <th>Rok uvedení do provozu</th>
+                <td>{{ auto.rok_vyroby }}</td>
+            </tr>
+            <tr>
+                <th>Stav tachometru</th>
+                <td><script>formattedNumber({{ auto.stav_tachometru }})</script> Km</td>
+            </tr>
+            <tr>
+                <th>Palivo</th>
+                <td>{{ auto.palivo }}</td>
+            </tr>
+            <tr>
+                <th>Barva</th>
+                <td>{{ auto.barva }}</td>
+            </tr>
+            <tr>
+                <th>Převodovka</th>
+                <td>{{ auto.prevodovka }}</td>
+            </tr>
+        </table>
+    
+        <p>{{ auto.popis }}</p>
     </div>
 </div>
 {% endblock %}
