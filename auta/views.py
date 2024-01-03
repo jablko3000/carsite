@@ -16,6 +16,7 @@ def homepage_view(request):
     email = request.GET.get('email', "")
     error_message = request.GET.get('error_message', "")
     register = request.GET.get('register', False)
+    login = request.GET.get('login', False)
 
     for auto in auta_list:
         auto.images = Image.objects.filter(auto_id=auto.id).order_by('order')
@@ -27,6 +28,7 @@ def homepage_view(request):
         'email': email,
         'error_message': error_message,
         'register': register,
+        'login': login,
     }
 
     return render(request, 'auta/homepage.html', context)
@@ -52,7 +54,7 @@ def user_login(request):
             login(request, user)
             return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně přihlášeno.')
         else:
-            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&email=' + email + '&error_message=Neplatné přihlašovací údaje.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&email=' + email + '&error_message=Neplatné přihlašovací údaje.&login=True')
     
 @login_required
 def user_logout(request):

@@ -37,39 +37,49 @@
           });
         </script>
     <div class="button-div">
-        <h1>{{ auto.znacka }} {{ auto.model }}, {{ auto.rok_vyroby }}</h1>
+        <div class="button-div car-name">
+            <h1>{{ auto.znacka }} {{ auto.model }}, {{ auto.rok_vyroby }}</h1>
+        </div>
+        <div class="button-div buttons">
         {% if user.is_staff %}
             <button class="button edit">Upravit</button>
         {% endif %}
         {% if user.is_authenticated %}
             <button class="button reserve">Rezervovat</button>
         {% endif %}
+        </div>
     </div>
     <h2>Technické parametry</h2>
     <div class="tech-params">
-        <table>
-            <tr>
-                <th>Rok uvedení do provozu</th>
-                <td>{{ auto.rok_vyroby }}</td>
-            </tr>
-            <tr>
-                <th>Stav tachometru</th>
-                <td><script>formattedNumber({{ auto.stav_tachometru }})</script> Km</td>
-            </tr>
-            <tr>
-                <th>Palivo</th>
-                <td>{{ auto.palivo }}</td>
-            </tr>
-            <tr>
-                <th>Barva</th>
-                <td>{{ auto.barva }}</td>
-            </tr>
-            <tr>
-                <th>Převodovka</th>
-                <td>{{ auto.prevodovka }}</td>
-            </tr>
-        </table>
-        <p>{{ auto.popis }}</p>
+        <div class="tech-params big">
+            <div class="tech-params table-div">
+                <table>
+                    <tr>
+                        <th>Rok uvedení do provozu</th>
+                        <td>{{ auto.rok_vyroby }}</td>
+                    </tr>
+                    <tr>
+                        <th>Stav tachometru</th>
+                        <td><script>formattedNumber({{ auto.stav_tachometru }})</script> Km</td>
+                    </tr>
+                    <tr>
+                        <th>Palivo</th>
+                        <td>{{ auto.palivo }}</td>
+                    </tr>
+                    <tr>
+                        <th>Barva</th>
+                        <td>{{ auto.barva }}</td>
+                    </tr>
+                    <tr>
+                        <th>Převodovka</th>
+                        <td>{{ auto.prevodovka }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tech-params note-div">
+                <p>{{ auto.popis }}</p>
+        </div>
+    </div>
     </div>
 </div>
 {% endblock %}

@@ -94,7 +94,11 @@
         }
         var register = "{{ register }}";
         if (register == "True") {
-            wrapper.classList.add('active');
+            wrapper.classList.add('register');
+        }
+        var login = "{{ login }}";
+        if (login == "True") {
+            wrapper.classList.add('login');
         }
         if (window.history.replaceState) {
             var clean_url = window.location.protocol + "//" + window.location.host + window.location.pathname;

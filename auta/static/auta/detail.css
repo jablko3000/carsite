@@ -7,11 +7,10 @@ h1{
     position: relative;
     font-size: 40px;
     font-weight: 600;
-    margin: 0 5vw 0 5vw;
-    backdrop-filter: blur(20px);
+    margin: 0 15vw 0 5vw;
     z-index: 5;
     width: fit-content;
-    border-radius: 18px;
+    text-align: center;
 }
 
 h2{
@@ -24,7 +23,7 @@ h2{
 .tech-params{
     display: flex;
     justify-content: center;
-    margin: 0 5vw 0 5vw;
+    align-items: center;
 }
 
 .tech-params table{
@@ -33,7 +32,7 @@ h2{
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
-    margin-right: 5vw;
+    text-align: center;
 }
 
 .tech-params table th{
@@ -58,6 +57,18 @@ h2{
     font-size: 20px;
 }
 
+.tech-params.table-div{
+    margin: 0;
+    padding: 0;
+    width: fit-content;
+}
+
+.tech-params.note-div{
+    margin: 0;
+    padding: 0;
+    width: fit-content;
+}
+
 .tech-params p{
     font-size: 20px;
     margin-left: 5vw;
@@ -69,7 +80,7 @@ h2{
     color: #162938;
     font-size: 1.1rem;
     font-weight: 500;
-    margin-left: 40px;
+    margin: 1vw;
     width: 130px;
     height: 50px;
     background: transparent;
@@ -89,4 +100,28 @@ h2{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 900px){
+    .button-div{
+        display: block;
+        text-align: center;
+    }
+
+    .button-div.car-name{
+        display: flex;
+    }
+    .button{
+        margin: 1vh 2vw;
+    }
+    h1{
+        margin: 0 5vw 0 5vw;
+    }
+    .tech-params.big{
+        display: block;
+        text-align: center;
+    }
+    .tech-params.table-div{
+        margin-bottom: 3vh;
+    }
 }
