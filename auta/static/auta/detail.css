@@ -63,3 +63,30 @@ h2{
     margin-left: 5vw;
     text-align: left;
 }
+
+.button{
+    position: relative;
+    color: #162938;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-left: 40px;
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #162938;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .5s;
+}
+  
+.button:hover{
+    background: #162938;
+    color: #fff;
+}
+
+.button-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

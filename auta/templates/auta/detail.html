@@ -36,7 +36,15 @@
             },
           });
         </script>
-    <h1>{{ auto.znacka }} {{ auto.model }}, {{ auto.rok_vyroby }}</h1>
+    <div class="button-div">
+        <h1>{{ auto.znacka }} {{ auto.model }}, {{ auto.rok_vyroby }}</h1>
+        {% if user.is_staff %}
+            <button class="button edit">Upravit</button>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <button class="button reserve">Rezervovat</button>
+        {% endif %}
+    </div>
     <h2>Technické parametry</h2>
     <div class="tech-params">
         <table>
