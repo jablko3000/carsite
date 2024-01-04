@@ -58,10 +58,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return f"Uživatel {self.full_name} s emailem {self.email}"
 
 class Auto(models.Model):
-    znacka = models.CharField(max_length=50)
-    model = models.CharField(max_length=200)
+    znacka = models.CharField(max_length=25)
+    model = models.CharField(max_length=75)
     rok_vyroby = models.IntegerField(validators=[MinValueValidator(1880), MaxValueValidator(2050)])
-    cena = models.IntegerField(validators=[MinValueValidator(0)])
+    cena = models.IntegerField(validators=[MinValueValidator(0)], max_length=12)
     datum_nabidky = models.DateTimeField(default=timezone.now)
     stav_tachometru = models.IntegerField(validators=[MinValueValidator(0)])
     palivo = models.CharField(max_length=25)

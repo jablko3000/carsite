@@ -1,15 +1,36 @@
 <header>
-  <h2 class="logo">Autogalaxie Brno</h2>
-  <nav class="navigation">
-    <a href="{%url 'auta:homepage'%}">Naše nabídka</a>
-    {% if user.is_staff %}
-      <a href="{%url 'admin:index'%}">Admin</a>
-    {% endif %}
-    {%if user.is_authenticated%}
-      <a href="{%url 'auta:user_profile'%}">Uživatelský profil</a>
-      <button class="btnLogout-popup">Odhlásit se</button>
-    {%else%}
-      <button class="btnLogin-popup">Přihlásit se</button>
-    {%endif%}
-  </nav>
+    <div class="nav">
+        <div class="logo"><a href="{%url 'auta:homepage'%}">Autogalaxie Brno</a></div>
+        <ul class="links">
+            <li><a href="{%url 'auta:homepage'%}">Naše nabídka</a></li>
+            {% if user.is_staff %}
+                <li><a href="{%url 'admin:index'%}">Admin</a></li>
+            {% endif %}
+            {%if user.is_authenticated%}
+                <li><a href="{%url 'auta:user_profile'%}">Uživatelský profil</a></li>
+            {%endif%}
+        </ul>
+        {%if user.is_authenticated%}
+            <button class="btn-popup logout">Odhlásit se</button>
+        {%else%}
+          <button class="btn-popup login">Přihlásit se</button>
+        {%endif%}
+        <div class="toggle_btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+    <div class="dropdown_menu">
+        <div>
+            <li><a href="{%url 'auta:homepage'%}">Naše nabídka</a></li>
+            {% if user.is_staff %}
+                <li><a href="{%url 'admin:index'%}">Admin</a></li>
+            {% endif %}
+            {%if user.is_authenticated%}
+                <li><a href="{%url 'auta:user_profile'%}">Uživatelský profil</a></li>
+                <li><button class="btn-popup logout">Odhlásit se</button></li>
+            {%else%}
+                <li><button class="btn-popup login">Přihlásit se</button></li>
+            {%endif%}
+        </div>
+    </div>
 </header>

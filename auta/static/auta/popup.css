@@ -22,12 +22,12 @@
 }
 
 .wrapper{
-    position: fixed;
+    position: absolute;
     width: 40vw;
     height: 75vh;
     min-height: 370px;
     min-width: 395px;
-    top: -40vh;
+    top: 110px;
     background: transparent;
     border: 2px solid rgba(0,0,0,0.5);
     border-radius: 20px;
@@ -38,24 +38,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-x: hidden;
+    overflow: hidden;
     transition: opacity .5s ease, height .25s ease, transform .25s ease;
     opacity: 0;
     scale: 0;
 }
 
 .wrapper.active-popup{
-    transform: translateY(75%);
     opacity: 1;
     scale: 1;
 }
 
-.wrapper.register{
-    min-height: 585px;
-
+.wrapper.login{
+    height: 375px;
 }
 
-  
+.wrapper.register{
+    height: 585px;
+}
+
+.wrapper.logout{
+    height: 250px;
+}
+
 .wrapper .form-box{
     width: 100%;
     padding: 40px;
@@ -63,7 +68,7 @@
   
 .wrapper .form-box.login{
     position: absolute;
-    transform: translateX(-100vw);
+    transform: translateX(-150vw);
 }
 
 .wrapper.login .form-box.login{
@@ -73,17 +78,18 @@
   
 .wrapper .form-box.register{
     position: absolute;
-    transform: translateX(100vw);
+    transform: translateX(150vw);
 }
 
 .wrapper.register .form-box.register{
     transition: transform 0.18s ease;
     transform: translateX(0px);
+    overflow: scroll;
 }
 
 .wrapper .form-box.logout{
     position: absolute;
-    transform: translateX(100vw);
+    transform: translateX(150vw);
 }
 
 .wrapper.logout .form-box.logout{
@@ -112,6 +118,7 @@
     font-size: 2rem;
     color: #162938;
     text-align: center;
+    margin-bottom: 3vh;
 }
   
 .input-box{
@@ -220,7 +227,5 @@
 @media (max-width: 1000px) {
     .wrapper{
         width: 100vw;
-        height: 85vh;
-        top: -50vh;
     }
 }

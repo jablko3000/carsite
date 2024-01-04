@@ -34,13 +34,22 @@ h1{
   transition: 0.5s;
 }
 
+.img_container{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+  margin-bottom: 25px;
+}
+
 .car_preview img{
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
-  width: 15vw;
-  height: 15vh;
   border-radius: 18px;
-  min-width: 200px;
-  min-height: 200px;
   background: white;
 }
 
@@ -65,15 +74,13 @@ h1{
 @media (max-width: 1000px){
   .car_preview{
     width: 40vw;
-    height: fit-content;
+    height: 50vh;
     margin: 5vw;
-    min-width: 200px;
-    min-height: 200px;
   }
 
-  .car_preview img{
+  .img_container{
     width: 40vw;
-    height: auto;
+    height: 30vh;
   }
 
 }
@@ -83,11 +90,9 @@ h1{
     width: 90vw;
     height: fit-content;
     margin: 5vw;
-    min-width: 200px;
-    min-height: 200px;
   }
 
-  .car_preview img{
+  .img_container{
     width: 90vw;
     height: auto;
   }
