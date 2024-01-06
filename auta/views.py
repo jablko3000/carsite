@@ -55,12 +55,16 @@ def user_login(request):
             return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně přihlášeno.')
         else:
             return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&email=' + email + '&error_message=Neplatné přihlašovací údaje.&login=True')
+    else:
+        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Aj, Chyba!&login=True')
     
 @login_required
 def user_logout(request):
     if request.method == 'POST':
         logout(request)
         return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně odhlášeno.')
+    else:
+        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Aj, Chyba!&logout=True')
 
 def user_register(request):
     if request.method == 'POST':
@@ -93,10 +97,45 @@ def user_profile(request):
 def user_profile_edit(request):
     user = request.user
     if request.method == 'POST':
-        user.email = request.POST.get("email")
-        user.full_name = request.POST.get("full_name")
-        user.phone = request.POST.get("phone")
-        user.save()
+        form_type = request.POST.get("form_type")
+        if form_type == "name":
+            full_name = request.POST.get("full_name")
+            if not full_name:
+                return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
+            else:
+                user.full_name = full_name
+                user.save()
+        elif form_type == "email":
+            email = request.POST.get("email")
+            if not email:
+                return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
+            else:
+                user.email = email
+                user.save()
+                login(request, user)
+        elif form_type == "phone":
+            phone = request.POST.get("phone")
+            if not phone:
+                return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
+            else:
+                user.phone = phone
+                user.save()
+        elif form_type == "password":
+            current_password = request.POST.get("current_password")
+            password1 = request.POST.get("password1")
+            password2 = request.POST.get("password2")
+            user_auth = authenticate(request, email=user.email, password=current_password)
+            if user_auth is not None:
+                if not password1 or not password2:
+                    return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
+                if password1 != password2:
+                    return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Hesla se neshodují.')
+                else:
+                    user.set_password(password1)
+                    user.save()
+                    login(request, user)
+            else:
+                return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
         return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Úspěšně upraveno.')
     else:
         return render(request, 'auta/user_profile.html', {'user': user})

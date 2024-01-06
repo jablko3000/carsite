@@ -59,6 +59,11 @@ if (btnLogoutPopup) {
 if (iconClose) {
     iconClose.addEventListener('click', () => {
         wrapper.classList.remove('active-popup');
+        wrapper.classList.remove('edit');
+        wrapper.classList.remove('name');
+        wrapper.classList.remove('email');
+        wrapper.classList.remove('password');
+        wrapper.classList.remove('phone');
         background.classList.remove('active');
     });
 }
@@ -66,6 +71,11 @@ if (iconClose) {
 if (background) {
     background.addEventListener('click', () => {
         wrapper.classList.remove('active-popup');
+        wrapper.classList.remove('edit');
+        wrapper.classList.remove('name');
+        wrapper.classList.remove('email');
+        wrapper.classList.remove('password');
+        wrapper.classList.remove('phone');
         background.classList.remove('active');
         dropdownMenu.classList.remove('open');
         const isOpen = dropdownMenu.classList.contains('open');
@@ -87,7 +97,8 @@ if (toggleBtn) {
 if (nameEdit){
     nameEdit.addEventListener('click', () => {
         wrapper.classList.add('active-popup');
-        wrapper.classList.add('edit-name');
+        wrapper.classList.add('edit');
+        wrapper.classList.add('name');
         background.classList.add('active');
     });
 }
@@ -95,7 +106,8 @@ if (nameEdit){
 if (emailEdit){
     emailEdit.addEventListener('click', () => {
         wrapper.classList.add('active-popup');
-        wrapper.classList.add('edit-email');
+        wrapper.classList.add('edit');
+        wrapper.classList.add('email');
         background.classList.add('active');
     });
 }
@@ -103,7 +115,8 @@ if (emailEdit){
 if (passwordEdit){
     passwordEdit.addEventListener('click', () => {
         wrapper.classList.add('active-popup');
-        wrapper.classList.add('edit-password');
+        wrapper.classList.add('edit');
+        wrapper.classList.add('password');
         background.classList.add('active');
     });
 }
@@ -111,7 +124,8 @@ if (passwordEdit){
 if (phoneEdit){
     phoneEdit.addEventListener('click', () => {
         wrapper.classList.add('active-popup');
-        wrapper.classList.add('edit-phone');
+        wrapper.classList.add('edit');
+        wrapper.classList.add('phone');
         background.classList.add('active');
     });
 }

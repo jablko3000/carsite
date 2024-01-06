@@ -113,7 +113,48 @@
     cursor: pointer;
     z-index: 1;
 }
-  
+
+.wrapper .form-box.name{
+    position: absolute;
+    transform: translateX(150vw);
+}
+
+.wrapper.name .form-box.name{
+    transition: transform 0.18s ease;
+    transform: translateX(0px);
+}
+
+.wrapper .form-box.email{
+    position: absolute;
+    transform: translateX(150vw);
+}
+
+.wrapper.email .form-box.email{
+    transition: transform 0.18s ease;
+    transform: translateX(0px);
+}
+
+.wrapper .form-box.password{
+    position: absolute;
+    transform: translateX(150vw);
+}
+
+.wrapper.password .form-box.password{
+    transition: transform 0.18s ease;
+    transform: translateX(0px);
+}
+
+.wrapper .form-box.phone{
+    position: absolute;
+    transform: translateX(150vw);
+}
+
+.wrapper.phone .form-box.phone{
+    transition: transform 0.18s ease;
+    transform: translateX(0px);
+}
+
+
 .form-box h2{
     font-size: 2rem;
     color: #162938;
