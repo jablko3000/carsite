@@ -1,4 +1,4 @@
-.login-register-form{
+.popup{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -206,7 +206,7 @@
     font-weight: 500;
 }
   
-.popup{
+.login-register-form{
     font-size: .9rem;
     color: #162938;
     text-align: center;
@@ -214,13 +214,13 @@
     margin: 25px 0 10px;
 }
   
-.popup p a{
+.login-register-form p a{
     color: #162938;
     text-decoration: none;
     font-weight: 600;
 }
   
-.popup p a:hover{
+.login-register-form p a:hover{
     text-decoration: underline;
 }
 

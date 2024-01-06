@@ -1,5 +1,74 @@
-.profile h3{
-    margin: 0 0 0 40vw;
-    font-size: 30px;
-    font-weight: 600;
+.detail{
+    position: relative;
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 5vw 15px 5vw;
+}
+
+.detail h3{
+    position: relative;
+    margin-right: 5vw;
+    grid-column: 1;
+    grid-row: 1;
+}
+.detail h4{
+    position: relative;
+    margin-right: 5vw;
+    grid-column: 2;
+    grid-row: 2;
+}
+.detail a {
+    position: relative;
+    margin-left: 5vw;
+    grid-column: 3;
+    grid-row: 2;
+}
+.detail input{
+    position: relative;
+    grid-column: 2;
+    grid-row: 2;
+}
+.detail::after{
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: -1%;
+    width: 102%;
+    height: 3px;
+    background: #162938;
+}
+
+
+
+
+
+
+
+
+.profile a{
+    color: #162938;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    position: relative;
+}
+  
+.profile a::after{
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #162938;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .5s;
+}
+  
+.profile a:hover::after{
+    transform: scaleX(1);
+    transform-origin: left;
 }

@@ -8,18 +8,26 @@ const background = document.querySelector('.background');
 const toggleBtn = document.querySelector('.toggle_btn');
 const toggleBtnIcon = document.querySelector('.toggle_btn i');
 const dropdownMenu = document.querySelector('.dropdown_menu');
+const nameEdit = document.querySelector('.name-edit');
+const emailEdit = document.querySelector('.email-edit');
+const passwordEdit = document.querySelector('.password-edit');
+const phoneEdit = document.querySelector('.phone-edit');
 
-registerLink.addEventListener('click', () => {
-    wrapper.classList.add('register');
-    wrapper.classList.remove('login');
-});
+if (registerLink) {
+    registerLink.addEventListener('click', () => {
+        wrapper.classList.add('register');
+        wrapper.classList.remove('login');
+    });
+}
 
-loginLink.addEventListener('click', () => {
-    wrapper.classList.remove('register');
-    wrapper.classList.add('login');
-});
+if (loginLink) {
+    loginLink.addEventListener('click', () => {
+        wrapper.classList.remove('register');
+        wrapper.classList.add('login');
+    });
+}
 
-try{
+if (btnLoginPopup) {
     btnLoginPopup.forEach((button) => {
         button.addEventListener('click', () => {
             wrapper.classList.add('active-popup');
@@ -33,11 +41,8 @@ try{
         });
     });
 }
-catch(err){
-    console.log(err);
-}
 
-try{
+if (btnLogoutPopup) {
     btnLogoutPopup.forEach((button) => {
         button.addEventListener('click', () => {
             wrapper.classList.add('active-popup');
@@ -50,28 +55,63 @@ try{
         });
     });
 }
-catch(err){
-    console.log(err);
+
+if (iconClose) {
+    iconClose.addEventListener('click', () => {
+        wrapper.classList.remove('active-popup');
+        background.classList.remove('active');
+    });
 }
 
-iconClose.addEventListener('click', () => {
-    wrapper.classList.remove('active-popup');
-    background.classList.remove('active');
-});
+if (background) {
+    background.addEventListener('click', () => {
+        wrapper.classList.remove('active-popup');
+        background.classList.remove('active');
+        dropdownMenu.classList.remove('open');
+        const isOpen = dropdownMenu.classList.contains('open');
 
-background.addEventListener('click', () => {
-    wrapper.classList.remove('active-popup');
-    background.classList.remove('active');
-    dropdownMenu.classList.remove('open');
-    const isOpen = dropdownMenu.classList.contains('open');
+        toggleBtnIcon.classList = isOpen ? 'fas fa-xmark' : 'fas fa-bars';
+    });
+}
 
-    toggleBtnIcon.classList = isOpen ? 'fas fa-xmark' : 'fas fa-bars';
-});
+if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('open');
+        const isOpen = dropdownMenu.classList.contains('open');
 
-toggleBtn.addEventListener('click', () => {
-    dropdownMenu.classList.toggle('open');
-    const isOpen = dropdownMenu.classList.contains('open');
+        toggleBtnIcon.classList = isOpen ? 'fas fa-xmark' : 'fas fa-bars';
+        background.classList.toggle('active');
+    });
+}
 
-    toggleBtnIcon.classList = isOpen ? 'fas fa-xmark' : 'fas fa-bars';
-    background.classList.toggle('active');
-});
+if (nameEdit){
+    nameEdit.addEventListener('click', () => {
+        wrapper.classList.add('active-popup');
+        wrapper.classList.add('edit-name');
+        background.classList.add('active');
+    });
+}
+
+if (emailEdit){
+    emailEdit.addEventListener('click', () => {
+        wrapper.classList.add('active-popup');
+        wrapper.classList.add('edit-email');
+        background.classList.add('active');
+    });
+}
+
+if (passwordEdit){
+    passwordEdit.addEventListener('click', () => {
+        wrapper.classList.add('active-popup');
+        wrapper.classList.add('edit-password');
+        background.classList.add('active');
+    });
+}
+
+if (phoneEdit){
+    phoneEdit.addEventListener('click', () => {
+        wrapper.classList.add('active-popup');
+        wrapper.classList.add('edit-phone');
+        background.classList.add('active');
+    });
+}

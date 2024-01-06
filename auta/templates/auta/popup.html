@@ -1,0 +1,110 @@
+<div class="wrapper">
+    <span class="icon-close"><ion-icon name="close"></ion-icon></span>
+    {% if user.is_authenticated %}
+        <div class="form-box logout">
+            <h2>Opravdu se chcete odhlásit?</h2>
+            <form action="{% url 'auta:user_logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn">Odhlásit se</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="form-box login" >
+        <h2>Přihlásit se</h2>
+        <form action="{% url 'auta:user_login' %}" method="post">
+            {% csrf_token %}
+            <div class="input-box">
+            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+            <input type="email" name="email" id="email" required placeholder="" autocomplete="email">
+            <label>E-mail</label>
+            </div>
+            <div class="input-box">
+            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+            <input type="password" name="password" id="password" required placeholder="" autocomplete="current-password">
+            <label>Heslo</label>
+            </div>
+            <div class="remember">
+            <label><input type="checkbox">Zapamatovat si mě</label>
+            <a href="#">Zapomenuté heslo?</a>
+            </div>
+            <button type="submit" class="btn">Přihlásit se</button>
+            <div class="login-register-form">
+            <p>Nemáte účet? <a class="register-link" style="cursor: pointer;">Registrovat se</a></p>
+            </div>
+        </form>
+        </div>
+    
+        <div class="form-box register" >
+            <h2>Registrovat se</h2>
+            <form action="{% url 'auta:user_register' %}" method="post">
+                {% csrf_token %}
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" name="full_name" id="full_name" required placeholder="" autocomplete="name">
+                    <label>Jméno a příjmení</label>
+                </div>
+                <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" name="email" id="email" required placeholder="" autocomplete="email">
+                <label>E-mail</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="call"></ion-icon></span>
+                    <input type="text" name="phone" id="phone" required placeholder="" autocomplete="tel">
+                    <label>Telefon</label>
+                </div>
+                <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="password1" id="password1" required placeholder="" autocomplete="new-password" >
+                <label>Heslo</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" name="password2" id="password2" required placeholder="" autocomplete="new-password">
+                    <label>Potvrzení hesla</label>
+                </div>
+                <button type="submit" class="btn">Registrovat se</button>
+                <div class="login-register-form">
+                <p>Již máte účet? <a class="login-link" style="cursor: pointer;">Přihlásit se</a></p>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+    
+</div>
+<div class="background"></div>
+
+
+
+
+<script>
+    window.onload = function() {
+        var show_popup = "{{ show_popup }}";
+        if (show_popup == "True") {
+            wrapper.classList.add('active-popup');
+            background.classList.add('active');
+        }
+        var email = "{{ email }}";
+        if (email != "") {
+            document.getElementById("email").value = email;
+        }
+        var error_message = "{{ error_message }}";
+        if (error_message != "") {
+            alert(error_message);
+        }
+        var register = "{{ register }}";
+        if (register == "True") {
+            wrapper.classList.add('register');
+        }
+        var login = "{{ login }}";
+        if (login == "True") {
+            wrapper.classList.add('login');
+        }
+        if (window.history.replaceState) {
+            var clean_url = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({}, document.title, clean_url);
+        }
+    };
+</script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

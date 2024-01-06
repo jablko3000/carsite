@@ -5,27 +5,27 @@
 {% endblock %}
 {% block content %}
 <div class="profile">
-    <table>
-        <tr>
-            <th>Jméno</th>
-            <td>{{ user.full_name }}</td>
-            <td><a href="{% url 'auta:user_profile' %}">Změnit</a></td>
-        </tr>
-        <tr>
-            <th>E-mail</th>
-            <td>{{ user.email }}</td>
-            <td><a href="{% url 'auta:user_profile' %}">Změnit</a></td>
-        </tr>
-        <tr>
-            <th>Heslo</th>
-            <td>••••••••••</td>
-            <td><a href="{% url 'auta:user_profile' %}">Změnit</a></td>
-        </tr>
-        <tr>
-            <th>Telefon</th>
-            <td>{{ user.phone }}</td>
-            <td><a href="{% url 'auta:user_profile' %}">Změnit</a></td>
-        </tr>
-    </table>
+    <div class="profile-details">
+        <div class="detail">
+            <h3>Jméno</h3>
+            <h4>{{ user.full_name }}</h4>
+            <a style="cursor: pointer;" class="name-edit">Změnit</a>
+        </div>
+        <div class="detail">
+            <h3>E-mail</h3>
+            <h4>{{ user.email }}</h4>
+            <a style="cursor: pointer;" class="email-edit">Změnit</a>
+        </div>
+        <div class="detail">
+            <h3>Heslo</h3>
+            <h4>••••••••••</h4>
+            <a style="cursor: pointer;" class="password-edit">Změnit</a>
+        </div>
+        <div class="detail">
+            <h3>Telefon</h3>
+            <h4>{{ user.phone }}</h4>
+            <a style="cursor: pointer;" class="phone-edit">Změnit</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

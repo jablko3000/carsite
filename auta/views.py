@@ -88,3 +88,15 @@ def user_register(request):
 def user_profile(request):
     user = request.user
     return render(request, 'auta/user_profile.html', {'user': user})
+
+@login_required
+def user_profile_edit(request):
+    user = request.user
+    if request.method == 'POST':
+        user.email = request.POST.get("email")
+        user.full_name = request.POST.get("full_name")
+        user.phone = request.POST.get("phone")
+        user.save()
+        return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Úspěšně upraveno.')
+    else:
+        return render(request, 'auta/user_profile.html', {'user': user})
