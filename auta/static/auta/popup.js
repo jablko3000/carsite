@@ -12,6 +12,7 @@ const nameEdit = document.querySelector('.name-edit');
 const emailEdit = document.querySelector('.email-edit');
 const passwordEdit = document.querySelector('.password-edit');
 const phoneEdit = document.querySelector('.phone-edit');
+const reserve = document.querySelector('button.reserve');
 
 if (registerLink) {
     registerLink.addEventListener('click', () => {
@@ -64,6 +65,8 @@ if (iconClose) {
         wrapper.classList.remove('email');
         wrapper.classList.remove('password');
         wrapper.classList.remove('phone');
+        wrapper.classList.remove('reserve');
+        wrapper.classList.remove('logout');
         background.classList.remove('active');
     });
 }
@@ -76,6 +79,8 @@ if (background) {
         wrapper.classList.remove('email');
         wrapper.classList.remove('password');
         wrapper.classList.remove('phone');
+        wrapper.classList.remove('reserve');
+        wrapper.classList.remove('logout');
         background.classList.remove('active');
         dropdownMenu.classList.remove('open');
         const isOpen = dropdownMenu.classList.contains('open');
@@ -126,6 +131,14 @@ if (phoneEdit){
         wrapper.classList.add('active-popup');
         wrapper.classList.add('edit');
         wrapper.classList.add('phone');
+        background.classList.add('active');
+    });
+}
+
+if (reserve){
+    reserve.addEventListener('click', () => {
+        wrapper.classList.add('active-popup');
+        wrapper.classList.add('reserve');
         background.classList.add('active');
     });
 }

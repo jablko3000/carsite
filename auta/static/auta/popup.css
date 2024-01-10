@@ -22,7 +22,7 @@
 }
 
 .wrapper{
-    position: absolute;
+    position: fixed;
     width: 40vw;
     height: 75vh;
     min-height: 370px;
@@ -84,7 +84,6 @@
 .wrapper.register .form-box.register{
     transition: transform 0.18s ease;
     transform: translateX(0px);
-    overflow: scroll;
 }
 
 .wrapper .form-box.logout{
@@ -151,6 +150,16 @@
 
 .wrapper.phone .form-box.phone{
     transition: transform 0.18s ease;
+    transform: translateX(0px);
+}
+
+.wrapper .form-box.reserve{
+    position: absolute;
+    transform: translateX(150vw);
+}
+
+.wrapper.reserve .form-box.reserve{
+    position: absolute;
     transform: translateX(0px);
 }
 
@@ -265,8 +274,44 @@
     text-decoration: underline;
 }
 
+.selectdiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.selectdiv select {
+    position: relative;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    width: 20rem;
+    padding: 1rem 4rem 1rem 1rem;
+    background: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg) no-repeat right 0.8em center / 1.4em,
+      linear-gradient(to left, rgba(255, 255, 255, 0.3) 3em, rgba(255, 255, 255, 0.2) 3em);
+    color: #162938;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin: 2vh 0 3vh 0;
+}
+.selectdiv option {
+    color: inherit;
+    background-color: white;
+}
+  
+
 @media (max-width: 1000px) {
     .wrapper{
         width: 100vw;
+    }
+}
+
+@media (max-height: 700px) {
+    .wrapper{
+        position: absolute;
     }
 }

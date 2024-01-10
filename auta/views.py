@@ -1,9 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.views import generic
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime, timedelta
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
+from datetime import time, timedelta, date
+from django.utils import timezone
 
 from .models import Auto, Rezervace, CustomUser, Image, Note
 from django.contrib.auth.models import User
@@ -39,9 +41,18 @@ def detail_view(request, auto_id):
     except Auto.DoesNotExist:
         raise Http404("Auto neexistuje")
     auto.images = Image.objects.filter(auto_id=auto.id).order_by('order')
+    dates = []
+    for i in range(7):
+        potential_date = date.today() + timedelta(days=i)
+        if potential_date.weekday() < 5:  # Exclude weekends
+            time_slots = get_time_slots(potential_date, auto)  # Replace with your function
+            if time_slots:  # If there are available time slots
+                dates.append(potential_date)
+
     context = {
         'auto': auto,
         'auto.images': auto.images,
+        'dates': dates,
     }
     return render(request, 'auta/detail.html', context)
 
@@ -139,3 +150,64 @@ def user_profile_edit(request):
         return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Úspěšně upraveno.')
     else:
         return render(request, 'auta/user_profile.html', {'user': user})
+    
+@login_required
+def auto_reserve_view(request, auto_id):
+    if request.method == 'POST':
+        date = request.POST.get('date-select')
+        time = request.POST.get('time-slot-select')
+        if not auto_id or not date or not time:
+            return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Neplatné údaje.')
+        else:
+            auto = Auto.objects.get(pk=auto_id)
+            date_time = datetime.strptime(date + ' ' + time, '%Y-%m-%d %H:%M')
+            if timezone.now() + timedelta(days=7) < date_time > timezone.now() + timedelta(minutes=15):
+                reservation = Rezervace.objects.create(auto=auto, datum_a_cas=date_time, user=request.user)
+                reservation.save()
+            else:
+                return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Neplatné údaje.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně rezervováno.')
+        
+
+    else:
+        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Aj, Chyba!')
+    
+def get_time_slots(date, auto):
+    time_slots = []
+    start_time = time(9, 0)
+    end_time = time(17, 0)
+
+    while start_time <= end_time:
+        current_datetime = timezone.make_aware(datetime.combine(date, start_time))
+        if current_datetime > timezone.now() + timedelta(minutes=15):
+            time_slots.append(current_datetime)
+        start_time = (datetime.combine(date.min, start_time) + timedelta(minutes=30)).time()
+
+    existing_reservations = Rezervace.objects.filter(auto=auto, datum_a_cas__date__range=[date.today(), date.today() + timedelta(days=7)])
+
+    for reservation in existing_reservations:
+        time_slots = [slot for slot in time_slots if abs((slot - reservation.datum_a_cas).total_seconds()) >= 30 * 60]
+    time_slots = [slot.strftime('%H:%M') for slot in time_slots]
+    return time_slots
+
+def get_dates(auto):
+    dates = []
+    for i in range(7):
+        potential_date = date.today() + timedelta(days=i)
+        if potential_date.weekday() < 5:
+            time_slots = get_time_slots(potential_date, auto)
+            if time_slots:
+                dates.append(potential_date)
+    return dates
+
+def get_time_slots_json(request):
+    date_str = request.GET.get('date')
+    date = datetime.strptime(date_str, '%Y-%m-%d').date()
+    auto_id = request.GET.get('auto_id')
+    auto = Auto.objects.get(pk=auto_id)
+    return JsonResponse({'time_slots': get_time_slots(date, auto)})
+
+def get_dates_json(request):
+    auto_id = request.GET.get('auto_id')
+    auto = Auto.objects.get(pk=auto_id)
+    return JsonResponse({'dates': get_dates(auto)})

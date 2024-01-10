@@ -76,5 +76,54 @@
     
         <p>{{ auto.popis }}</p>
     </div>
+    <script>
+        function updateDates() {
+            fetch('/get_dates_json?auto_id=' + {{ auto.id }})
+                .then(response => response.json())
+                .then(data => {
+                    var dateSelect = document.getElementById('date-select');
+                    dateSelect.innerHTML = '';
+                    if (data.dates.length === 0) {
+                        var noDatesMessage = document.getElementById('no-dates-message');
+                        alert('Žádné volné termíny, zkuste to znovu později!')
+                        dateSelect.style.display = 'none';
+                        document.getElementById('time-slot-select').style.display = 'none';
+                    } else {
+                        data.dates.forEach(function(date) {
+                            var option = document.createElement('option');
+                            option.value = date;
+                            var dateObj = new Date(date);
+                            option.text = dateObj.toLocaleDateString('cs-CZ', { day: 'numeric', month: 'long', year: 'numeric' });
+                            dateSelect.appendChild(option);
+                        });
+                        updateTimeSlots();
+                    }
+                });
+        }
+        
+        function updateTimeSlots() {
+            var selectedDate = document.getElementById('date-select').value;
+            var previousTimeSlot = document.getElementById('time-slot-select').value;
+            fetch('/get_time_slots_json?date=' + selectedDate + '&auto_id=' + {{ auto.id }})
+                .then(response => response.json())
+                .then(data => {
+                    var timeSlotSelect = document.getElementById('time-slot-select');
+                    timeSlotSelect.innerHTML = '';
+                    data.time_slots.forEach(function(timeSlot) {
+                        var option = document.createElement('option');
+                        option.value = timeSlot;
+                        option.text = timeSlot;  // Set the option text to the time slot
+                        timeSlotSelect.appendChild(option);
+                        if (timeSlot === previousTimeSlot) {
+                            option.selected = true;
+                        }
+                    });
+                });
+        }
+        
+        document.getElementById('date-select').addEventListener('change', updateTimeSlots);
+        
+        updateDates();
+        </script>
 </div>
 {% endblock %}

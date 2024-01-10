@@ -80,6 +80,7 @@ class Auto(models.Model):
 class Rezervace(models.Model):
     auto = models.ForeignKey(Auto, on_delete=models.CASCADE)
     datum_a_cas = models.DateTimeField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     
     def __str__(self):
         return f"Rezervace pro {self.auto} - {self.datum_a_cas}"

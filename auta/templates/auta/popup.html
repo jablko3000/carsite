@@ -8,69 +8,85 @@
                 <button type="submit" class="btn">Odhlásit se</button>
             </form>
         </div>
-
-        <div class="form-box edit name">
-            <h2>Změnit jméno</h2>
-            <form action="{% url 'auta:user_profile_edit' %}" method="post">
-                {% csrf_token %}
-                <div class="input-box">
-                    <span class="icon"><ion-icon name="person"></ion-icon></span>
-                    <input type="text" name="full_name" id="full_name" required placeholder="" autocomplete="name">
-                    <label>Jméno a příjmení</label>
-                </div>
-                <input type="hidden" name="form_type" value="name">
-                <button type="submit" class="btn">Změnit jméno</button>
-            </form>
-        </div>
-        <div class="form-box edit email">
-            <h2>Změnit e-mail</h2>
-            <form action="{% url 'auta:user_profile_edit' %}" method="post">
-                {% csrf_token %}
-                <div class="input-box">
-                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                    <input type="email" name="email" id="email" required placeholder="" autocomplete="email">
-                    <label>E-mail</label>
-                </div>
-                <input type="hidden" name="form_type" value="email">
-                <button type="submit" class="btn">Změnit e-mail</button>
-            </form>
-        </div>
-        <div class="form-box edit password">
-            <h2>Změnit heslo</h2>
-            <form action="{% url 'auta:user_profile_edit' %}" method="post">
-                {% csrf_token %}
-                <div class="input-box">
-                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" name="current_password" id="current_password" required placeholder="" autocomplete="current-password" >
-                    <label>Součastné heslo</label>
-                </div>
-                <div class="input-box">
-                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" name="password1" id="password1" required placeholder="" autocomplete="new-password" >
-                    <label>Nové heslo</label>
-                </div>
-                <div class="input-box">
-                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" name="password2" id="password2" required placeholder="" autocomplete="new-password">
-                    <label>Potvrzení nového hesla</label>
-                </div>
-                <input type="hidden" name="form_type" value="password">
-                <button type="submit" class="btn">Změnit heslo</button>
-            </form>
-        </div>
-        <div class="form-box edit phone">
-            <h2>Změnit telefon</h2>
-            <form action="{% url 'auta:user_profile_edit' %}" method="post">
-                {% csrf_token %}
-                <div class="input-box">
-                    <span class="icon"><ion-icon name="call"></ion-icon></span>
-                    <input type="text" name="phone" id="phone" required placeholder="" autocomplete="tel">
-                    <label>Telefon</label>
-                </div>
-                <input type="hidden" name="form_type" value="phone">
-                <button type="submit" class="btn">Změnit telefon</button>
-            </form>
-        </div>
+        {% if request.resolver_match.url_name == 'user_profile' %}
+            <div class="form-box edit name">
+                <h2>Změnit jméno</h2>
+                <form action="{% url 'auta:user_profile_edit' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="person"></ion-icon></span>
+                        <input type="text" name="full_name" id="full_name" required placeholder="" autocomplete="name">
+                        <label>Jméno a příjmení</label>
+                    </div>
+                    <input type="hidden" name="form_type" value="name">
+                    <button type="submit" class="btn">Změnit jméno</button>
+                </form>
+            </div>
+            <div class="form-box edit email">
+                <h2>Změnit e-mail</h2>
+                <form action="{% url 'auta:user_profile_edit' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <input type="email" name="email" id="email" required placeholder="" autocomplete="email">
+                        <label>E-mail</label>
+                    </div>
+                    <input type="hidden" name="form_type" value="email">
+                    <button type="submit" class="btn">Změnit e-mail</button>
+                </form>
+            </div>
+            <div class="form-box edit password">
+                <h2>Změnit heslo</h2>
+                <form action="{% url 'auta:user_profile_edit' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" name="current_password" id="current_password" required placeholder="" autocomplete="current-password" >
+                        <label>Součastné heslo</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" name="password1" id="password1" required placeholder="" autocomplete="new-password" >
+                        <label>Nové heslo</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" name="password2" id="password2" required placeholder="" autocomplete="new-password">
+                        <label>Potvrzení nového hesla</label>
+                    </div>
+                    <input type="hidden" name="form_type" value="password">
+                    <button type="submit" class="btn">Změnit heslo</button>
+                </form>
+            </div>
+            <div class="form-box edit phone">
+                <h2>Změnit telefon</h2>
+                <form action="{% url 'auta:user_profile_edit' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="call"></ion-icon></span>
+                        <input type="text" name="phone" id="phone" required placeholder="" autocomplete="tel">
+                        <label>Telefon</label>
+                    </div>
+                    <input type="hidden" name="form_type" value="phone">
+                    <button type="submit" class="btn">Změnit telefon</button>
+                </form>
+            </div>
+        {% endif %}
+        {% if request.resolver_match.url_name == 'detail' %}
+            <div class="form-box reserve">
+                <h2>Rezervace prohlídky</h2>
+                <form action="{% url 'auta:auto_reserve' auto.id %}" method="post">
+                    {% csrf_token %}
+                    <div style="display: flex;align-items: center;justify-content: center;">
+                        <div class="selectdiv">
+                            <select id="date-select" name="date-select"></select>
+                            <select id="time-slot-select" name="time-slot-select"></select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Rezervovat termín</button>
+                </form>
+            </div>
+        {% endif %}
     {% else %}
         <div class="form-box login" >
         <h2>Přihlásit se</h2>
