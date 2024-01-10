@@ -33,6 +33,7 @@ h2{
     vertical-align: middle;
     border-color: inherit;
     text-align: center;
+    margin: 0 5vw 0 5vw;
 }
 
 .tech-params table th{
