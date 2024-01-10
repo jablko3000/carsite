@@ -69,3 +69,19 @@
     transform: scaleX(1);
     transform-origin: left;
 }
+
+.rezervace-grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.rezervace-grid a {
+    cursor: pointer;
+    position: relative;
+    margin: 0.5vh 0.3vw;
+    background-color: rgba(200,200,200,0.8);
+    border-radius: 10px;
+    padding: 0.2rem;
+}

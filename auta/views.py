@@ -102,7 +102,12 @@ def user_register(request):
 @login_required
 def user_profile(request):
     user = request.user
-    return render(request, 'auta/user_profile.html', {'user': user})
+    rezervace = Rezervace.objects.filter(user=user).order_by('-datum_a_cas')
+    context = {
+        'user': user,
+        'rezervace': rezervace,
+    }
+    return render(request, 'auta/user_profile.html', context)
 
 @login_required
 def user_profile_edit(request):
@@ -160,8 +165,10 @@ def auto_reserve_view(request, auto_id):
             return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Neplatné údaje.')
         else:
             auto = Auto.objects.get(pk=auto_id)
-            date_time = datetime.strptime(date + ' ' + time, '%Y-%m-%d %H:%M')
-            if timezone.now() + timedelta(days=7) < date_time > timezone.now() + timedelta(minutes=15):
+            date_time_naive = datetime.strptime(date + ' ' + time, '%Y-%m-%d %H:%M')
+            date_time = timezone.make_aware(date_time_naive)
+
+            if timezone.now() + timedelta(minutes=15) <= date_time <= timezone.now() + timedelta(days=7):
                 reservation = Rezervace.objects.create(auto=auto, datum_a_cas=date_time, user=request.user)
                 reservation.save()
             else:

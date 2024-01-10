@@ -26,6 +26,16 @@
             <h4>{{ user.phone }}</h4>
             <a style="cursor: pointer;" class="phone-edit">Změnit</a>
         </div>
+        {% if rezervace %}
+            <div class="detail">
+                <h3>Vaše rezervace</h3>
+                <div class="rezervace-grid">
+                    {% for rez in rezervace %}
+                        <a href="{% url 'auta:detail' rez.auto.id %}"><h5>{{ rez.auto }} - {{ rez.datum_a_cas }}</h5></a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
