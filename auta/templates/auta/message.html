@@ -1,0 +1,22 @@
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert {{ message.tags }}"{% endif %}>
+        <div class="alert_text">{{ message }}</div>
+        <div class="alert_close" onclick="closeAlert(this)">&times;</div>
+    </div>
+    {% endfor %}
+</div>
+<script>
+    function closeAlert(element) {
+        var alert = element.parentElement;
+        var alertText = alert.querySelector('.alert_text');
+        alert.style.maxHeight = '0';
+        alert.style.padding = '0';
+        alertText.style.fontSize = '0';
+        setTimeout(function() {
+            alert.style.display = 'none';
+        }, 360);
+    }
+</script>
+{% endif %}

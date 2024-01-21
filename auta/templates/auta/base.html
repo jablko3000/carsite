@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="/static/navbar.css">
     <link rel="stylesheet" href="/static/popup.css">
     <link rel="script" href="/static/popup.js">
+    {% if messages %}
+        <link rel="stylesheet" href="/static/message.css">
+    {% endif %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     {% block head%}{% endblock head %}
     <title>{% block title %}Autogalaxie Brno{% endblock title %}</title>

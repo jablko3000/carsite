@@ -1,11 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
-from django.views import generic
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime, timedelta
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from datetime import time, timedelta, date
 from django.utils import timezone
+from django.contrib import messages
 
 from .models import Auto, Rezervace, CustomUser, Image, Note
 from django.contrib.auth.models import User
@@ -44,9 +44,9 @@ def detail_view(request, auto_id):
     dates = []
     for i in range(7):
         potential_date = date.today() + timedelta(days=i)
-        if potential_date.weekday() < 5:  # Exclude weekends
-            time_slots = get_time_slots(potential_date, auto)  # Replace with your function
-            if time_slots:  # If there are available time slots
+        if potential_date.weekday() < 5:
+            time_slots = get_time_slots(potential_date, auto)
+            if time_slots:
                 dates.append(potential_date)
 
     context = {
@@ -63,19 +63,24 @@ def user_login(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně přihlášeno.')
+            messages.success(request, 'Úspěšně přihlášeno.')
+            return HttpResponseRedirect(reverse('auta:homepage'))
         else:
-            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&email=' + email + '&error_message=Neplatné přihlašovací údaje.&login=True')
+            messages.error(request, 'Neplatné přihlašovací údaje.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&email=' + email + '&login=True')
     else:
-        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Aj, Chyba!&login=True')
+        messages.error(request, 'Neznámá chyba.')
+        return HttpResponseRedirect(reverse('auta:homepage') + '?login=True')
     
 @login_required
 def user_logout(request):
     if request.method == 'POST':
         logout(request)
-        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně odhlášeno.')
+        messages.success(request, 'Úspěšně odhlášeno.')
+        return HttpResponseRedirect(reverse('auta:homepage'))
     else:
-        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Aj, Chyba!&logout=True')
+        messages.error(request, 'Nepodařilo se odhlásit se.')
+        return HttpResponseRedirect(reverse('auta:homepage') + '?logout=True')
 
 def user_register(request):
     if request.method == 'POST':
@@ -85,19 +90,24 @@ def user_register(request):
         full_name = request.POST.get("full_name")
         phone = request.POST.get("phone")
         if not email or not password1 or not password2 or not full_name or not phone:
-            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&error_message=Neplatné přihlašovací údaje.&register=True')
+            messages.error(request, 'Neplatné přihlašovací údaje.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&register=True')
         if password1 != password2:
-            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&error_message=Neplatné přihlašovací údaje.&register=True')
+            messages.error(request, 'Hesla se neshodují.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&register=True')
         else:
             if CustomUser.objects.filter(email=email).exists():
-                return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&error_message=Uživatel s tímto emailem již existuje.&register=True')
+                messages.error(request, 'Uživatel s tímto emailem již existuje.')
+                return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&register=True')
             else:
                 user = CustomUser.objects.create_user(email, password1, phone, full_name)
                 user.save()
                 login(request, user)
-                return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně zaregistrováno.')
+                messages.success(request, 'Úspěšně zaregistrováno.')
+                return HttpResponseRedirect(reverse('auta:homepage'))
     else:
-        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Aj, Chyba!&register=True')
+        messages.error(request, 'Nepodařilo se zaregistrovat.')
+        return HttpResponseRedirect(reverse('auta:homepage') + '?register=True')
 
 @login_required
 def user_profile(request):
