@@ -2,6 +2,7 @@
   width: 80vw ;
   height: fit-content;
   user-select: none;
+  margin-top: 3vh;
 }
 
 .swiper-wrapper{
@@ -21,6 +22,7 @@
   object-fit: contain;
   cursor: zoom-in;
   transition: 0.25s;
+  margin-top: 1vh;
 }
 
 .swiper-slide img:hover {

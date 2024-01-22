@@ -12,7 +12,7 @@
         <div class="swiper-wrapper">
           {% for image in auto.images %}
                 <div class="swiper-slide">
-                    <img src="{{ image.url }}" alt="Image" style="cursor: pointer;">
+                    <img src="{{ image.url }}" alt="Image" style="cursor: pointer;" data-enlargeable>
                 </div>
             {% endfor %}
         </div>
@@ -124,6 +124,43 @@
         document.getElementById('date-select').addEventListener('change', updateTimeSlots);
         
         updateDates();
+        </script>
+
+        <script>
+			var images = document.querySelectorAll("img[data-enlargeable]");
+            images.forEach(function(img) {
+                img.classList.add("img-enlargeable");
+                img.addEventListener("click", function() {
+                    var src = this.getAttribute("src");
+                    var modal = document.createElement("div");
+                    modal.style.background = "RGBA(0,0,0,.5) url(" + src + ") no-repeat center";
+                    modal.style.backgroundSize = "contain";
+                    modal.style.width = "100%";
+                    modal.style.height = "100%";
+                    modal.style.position = "fixed";
+                    modal.style.zIndex = "10000";
+                    modal.style.top = "0";
+                    modal.style.left = "0";
+                    modal.style.cursor = "zoom-out";
+                    modal.style.opacity = '0';
+                    modal.style.transition = 'opacity 0.5s ease';
+                    modal.addEventListener("click", function() {
+                        document.body.removeChild(modal);
+                        document.body.removeEventListener("keyup", closeModal);
+                    });
+                    function closeModal(event) {
+                        if (event.key === "Escape") {
+                            document.body.removeChild(modal);
+                            document.body.removeEventListener("keyup", closeModal);
+                        }
+                    }
+                    document.body.appendChild(modal);
+                    setTimeout(function() {
+                        modal.style.opacity = '1';
+                    }, 10);
+                    document.body.addEventListener("keyup", closeModal);
+                });
+            });
         </script>
 </div>
 {% endblock %}
