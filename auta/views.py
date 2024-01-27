@@ -6,6 +6,7 @@ from django.urls import reverse
 from datetime import time, timedelta, date
 from django.utils import timezone
 from django.contrib import messages
+import requests
 
 from .models import Auto, Rezervace, CustomUser, Image, Note
 from django.contrib.auth.models import User
@@ -127,14 +128,16 @@ def user_profile_edit(request):
         if form_type == "name":
             full_name = request.POST.get("full_name")
             if not full_name:
-                return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
+                messages.error(request, 'Neplatné údaje.')
+                return HttpResponseRedirect(reverse('auta:user_profile'))
             else:
                 user.full_name = full_name
                 user.save()
         elif form_type == "email":
             email = request.POST.get("email")
             if not email:
-                return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
+                messages.error(request, 'Neplatné údaje.')
+                return HttpResponseRedirect(reverse('auta:user_profile'))
             else:
                 user.email = email
                 user.save()
@@ -142,7 +145,8 @@ def user_profile_edit(request):
         elif form_type == "phone":
             phone = request.POST.get("phone")
             if not phone:
-                return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
+                messages.error(request, 'Neplatné údaje.')
+                return HttpResponseRedirect(reverse('auta:user_profile'))
             else:
                 user.phone = phone
                 user.save()
@@ -153,16 +157,20 @@ def user_profile_edit(request):
             user_auth = authenticate(request, email=user.email, password=current_password)
             if user_auth is not None:
                 if not password1 or not password2:
-                    return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
+                    messages.error(request, 'Neplatné údaje.')
+                    return HttpResponseRedirect(reverse('auta:user_profile'))
                 if password1 != password2:
-                    return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Hesla se neshodují.')
+                    messages.error(request, 'Hesla se neshodují.')
+                    return HttpResponseRedirect(reverse('auta:user_profile'))
                 else:
                     user.set_password(password1)
                     user.save()
                     login(request, user)
             else:
-                return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Neplatné údaje.')
-        return HttpResponseRedirect(reverse('auta:user_profile') + '?error_message=Úspěšně upraveno.')
+                messages.error(request, 'Neplatné údaje.')
+                return HttpResponseRedirect(reverse('auta:user_profile'))
+        messages.success(request, 'Úspěšně upraveno.')
+        return HttpResponseRedirect(reverse('auta:user_profile'))
     else:
         return render(request, 'auta/user_profile.html', {'user': user})
     
@@ -172,7 +180,8 @@ def auto_reserve_view(request, auto_id):
         date = request.POST.get('date-select')
         time = request.POST.get('time-slot-select')
         if not auto_id or not date or not time:
-            return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Neplatné údaje.')
+            messages.error(request, 'Neplatné údaje.')
+            return HttpResponseRedirect(reverse('auta:homepage'))
         else:
             auto = Auto.objects.get(pk=auto_id)
             date_time_naive = datetime.strptime(date + ' ' + time, '%Y-%m-%d %H:%M')
@@ -182,12 +191,13 @@ def auto_reserve_view(request, auto_id):
                 reservation = Rezervace.objects.create(auto=auto, datum_a_cas=date_time, user=request.user)
                 reservation.save()
             else:
-                return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Neplatné údaje.')
-            return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Úspěšně rezervováno.')
-        
-
+                messages.error(request, 'Neplatné údaje.')
+                return HttpResponseRedirect(reverse('auta:homepage'))
+            messages.success(request, 'Úspěšně rezervováno.')
+            return HttpResponseRedirect(reverse('auta:detail', args=(auto_id,)))
     else:
-        return HttpResponseRedirect(reverse('auta:homepage') + '?error_message=Aj, Chyba!')
+        messages.error(request, 'Nepodařilo se rezervovat.')
+        return HttpResponseRedirect(reverse('auta:homepage'))
     
 def get_time_slots(date, auto):
     time_slots = []
@@ -228,3 +238,53 @@ def get_dates_json(request):
     auto_id = request.GET.get('auto_id')
     auto = Auto.objects.get(pk=auto_id)
     return JsonResponse({'dates': get_dates(auto)})
+
+@login_required
+def auto_edit_view(request, auto_id):
+    if not request.user.is_staff:
+        messages.error(request, 'Auta můžou upravovat pouze zaměstnanci.')
+        return HttpResponseRedirect(reverse('auta:homepage'))
+    
+    auto = Auto.objects.get(pk=auto_id)
+    if request.method == 'POST':
+        """fields = ['znacka', 'rok_vyroby', 'cena', 'stav_tachometru', 'palivo', 'barva', 'prevodovka', 'motor', 'popis']
+        for field in fields:
+            value = request.POST.get(field)
+            if not value:
+                messages.error(request, 'Neplatné údaje - ' + field)
+                return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
+            elif field != auto.field:
+                    setattr(auto, field, value)
+            else:
+                messages.error(request, '{field} již je stejný')
+                return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
+                """
+        image = request.POST.get('image')
+        if not image:
+            messages.error(request, 'Neplatný obrázek')
+            return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
+        else:
+            try:
+                response = requests.get(image)
+                if response.status_code != 200:
+                    raise ValueError('Neplatná adresa obrázku')
+                content_type = response.headers['content-type']
+                if not content_type.startswith('image/'):
+                    raise ValueError('Adresa neobsahuje obrázek')
+            except (requests.ConnectionError, ValueError):
+                messages.error(request, 'Neplatný obrázek')
+                return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
+           
+        order = Image.objects.filter(auto_id=auto.id).count() + 1
+        img_obj = Image.objects.create(auto_id=auto, url=image.strip(), order=order)
+        img_obj.save()
+        auto.save()
+        messages.success(request, 'Úspěšně upraveno.')
+        return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
+    else:
+        auto.images = Image.objects.filter(auto_id=auto.id).order_by('order')
+        context = {
+            'auto': auto,
+            'auto.images': auto.images,
+        }
+        return render(request, 'auta/edit_car.html', context)

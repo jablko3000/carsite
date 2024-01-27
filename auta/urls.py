@@ -7,6 +7,7 @@ app_name = "auta"
 urlpatterns = [
     path("", views.homepage_view, name="homepage"),
     path("auto/<int:auto_id>/", views.detail_view, name="detail"),
+    path("auto/<int:auto_id>/edit/", views.auto_edit_view, name="auto_edit"),
     path("auto/<int:auto_id>/reserve/", views.auto_reserve_view, name="auto_reserve"),
     path("login/", views.user_login, name="user_login"),
     path("logout/", views.user_logout, name="user_logout"),

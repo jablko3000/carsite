@@ -1,0 +1,116 @@
+{% extends "auta/base.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="/static/add_car.css">
+{% endblock %}
+{% block title %}Přidat auto | {{ block.super }}{% endblock %}
+{% block content %}
+<div class="detail">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          {% for image in auto.images %}
+                {% if image.url|is_valid_image %}
+                    <div class="swiper-slide">
+                        <img src="{{ image.url }}" alt="Image" style="cursor: pointer;" data-enlargeable>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+            },
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        </script>
+    <div class="button-div">
+        <div class="button-div car-name">
+            <h1>{{ auto.znacka }} {{ auto.model }}, {{ auto.rok_vyroby }}</h1>
+        </div>
+        <div class="button-div buttons">
+        {% if user.is_staff %}
+            <button class="button edit">Upravit</button>
+        {% endif %}
+        {% if user.is_authenticated %}
+            <button class="button reserve">Rezervovat</button>
+        {% endif %}
+        </div>
+    </div>
+    <h2>Technické parametry</h2>
+    <div class="tech-params">
+        <table>
+            <tr>
+                <th>Rok uvedení do provozu</th>
+                <td>{{ auto.rok_vyroby }}</td>
+            </tr>
+            <tr>
+                <th>Stav tachometru</th>
+                <td><script>formattedNumber({{ auto.stav_tachometru }})</script> Km</td>
+            </tr>
+            <tr>
+                <th>Palivo</th>
+                <td>{{ auto.palivo }}</td>
+            </tr>
+            <tr>
+                <th>Barva</th>
+                <td>{{ auto.barva }}</td>
+            </tr>
+            <tr>
+                <th>Převodovka</th>
+                <td>{{ auto.prevodovka }}</td>
+            </tr>
+        </table>
+    
+        <p>{{ auto.popis }}</p>
+    </div>
+    <script>
+        var images = document.querySelectorAll("img[data-enlargeable]");
+        images.forEach(function(img) {
+            img.classList.add("img-enlargeable");
+            img.addEventListener("click", function() {
+                var src = this.getAttribute("src");
+                var modal = document.createElement("div");
+                modal.style.background = "RGBA(0,0,0,.5) url(" + src + ") no-repeat center";
+                modal.style.backgroundSize = "contain";
+                modal.style.width = "100%";
+                modal.style.height = "100%";
+                modal.style.position = "fixed";
+                modal.style.zIndex = "10000";
+                modal.style.top = "0";
+                modal.style.left = "0";
+                modal.style.cursor = "zoom-out";
+                modal.style.opacity = '0';
+                modal.style.transition = 'opacity 0.5s ease';
+                modal.addEventListener("click", function() {
+                    document.body.removeChild(modal);
+                    document.body.removeEventListener("keyup", closeModal);
+                });
+                function closeModal(event) {
+                    if (event.key === "Escape") {
+                        document.body.removeChild(modal);
+                        document.body.removeEventListener("keyup", closeModal);
+                    }
+                }
+                document.body.appendChild(modal);
+                setTimeout(function() {
+                    modal.style.opacity = '1';
+                }, 10);
+                document.body.addEventListener("keyup", closeModal);
+            });
+        });
+    </script>
+</div>
+{% endblock %}

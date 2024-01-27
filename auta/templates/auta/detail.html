@@ -11,9 +11,11 @@
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
           {% for image in auto.images %}
-                <div class="swiper-slide">
-                    <img src="{{ image.url }}" alt="Image" style="cursor: pointer;" data-enlargeable>
-                </div>
+                {% if image.url %}
+                    <div class="swiper-slide">
+                        <img src="{{ image.url }}" alt="Image" style="cursor: pointer;" data-enlargeable>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         <div class="swiper-button-next"></div>
@@ -42,7 +44,9 @@
         </div>
         <div class="button-div buttons">
         {% if user.is_staff %}
-            <button class="button edit">Upravit</button>
+            <a href="{%url 'auta:auto_edit' auto.id%}">
+                <button class="button edit" href="{%url 'auta:auto_edit' auto.id%}">Upravit</button>
+            </a>
         {% endif %}
         {% if user.is_authenticated %}
             <button class="button reserve">Rezervovat</button>
@@ -112,7 +116,7 @@
                     data.time_slots.forEach(function(timeSlot) {
                         var option = document.createElement('option');
                         option.value = timeSlot;
-                        option.text = timeSlot;  // Set the option text to the time slot
+                        option.text = timeSlot;
                         timeSlotSelect.appendChild(option);
                         if (timeSlot === previousTimeSlot) {
                             option.selected = true;
