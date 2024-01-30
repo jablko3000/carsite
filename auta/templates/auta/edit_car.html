@@ -1,10 +1,10 @@
 {% extends "auta/base.html" %}
 {% load static %}
 {% block head %}
-    <link rel="stylesheet" href="/static/edit_car.css">
     <link rel="stylesheet" href="/static/detail.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/static/swiper.css">
+    <link rel="stylesheet" href="/static/edit_car.css">
 {% endblock %}
 {% block title %}Upravit auto | {{ block.super }}{% endblock %}
 {% block content %}
@@ -49,39 +49,52 @@
                 </script>
             <div class="button-div">
                 <div class="button-div car-name">
-                    <h1>{{ auto.znacka }} {{ auto.model }}, {{ auto.rok_vyroby }}</h1>
+                    <div>
+                        <h1>Značka: </h1>
+                        <input type="text" name="znacka" value="{{ auto.znacka }}">
+                    </div>
+                    <div>
+                        <h1>Model: </h1>
+                        <input type="text" name="model" value="{{ auto.model }}">
+                    </div>
+                    <div>
+                        <h1>Rok výroby: </h1>
+                        <input type="text" name="rok_vyroby" value="{{ auto.rok_vyroby }}">
+                    </div>
+                    <div>
+                        <h1>Cena: </h1>
+                        <input type="text" name="cena" value="{{ auto.cena }}">
+                    </div>
                 </div>
                 <div class="button-div buttons">
                     <button type="submit" class="button save">Uložit</button>
-                    <button class="button delete">Smazat</button>
+                    <a href={%url 'auta:auto_delete' auto.id%}>
+                        <button type="button" class="button delete">Smazat</button>
+                    </a>
                 </div>
             </div>
             <h2>Technické parametry</h2>
             <div class="tech-params">
                 <table>
                     <tr>
-                        <th>Rok uvedení do provozu</th>
-                        <td>{{ auto.rok_vyroby }}</td>
-                    </tr>
-                    <tr>
                         <th>Stav tachometru</th>
-                        <td><script>formattedNumber({{ auto.stav_tachometru }})</script> Km</td>
+                        <td><input type="text" name="stav_tachometru" value="{{ auto.stav_tachometru }}"></td>
                     </tr>
                     <tr>
                         <th>Palivo</th>
-                        <td>{{ auto.palivo }}</td>
+                        <td><input type="text" name="palivo" value="{{ auto.palivo }}"></td>
                     </tr>
                     <tr>
                         <th>Barva</th>
-                        <td>{{ auto.barva }}</td>
+                        <td><input type="text" name="barva" value="{{ auto.barva }}"></td>
                     </tr>
                     <tr>
                         <th>Převodovka</th>
-                        <td>{{ auto.prevodovka }}</td>
+                        <td><input type="text" name="prevodovka" value="{{ auto.prevodovka }}"></td>
                     </tr>
                 </table>
             
-                <p>{{ auto.popis }}</p>
+                <input type="text" name="popis" value="{{ auto.popis }}" class="description">
             </div>
         </div>
     </form>

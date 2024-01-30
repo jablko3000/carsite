@@ -247,40 +247,41 @@ def auto_edit_view(request, auto_id):
     
     auto = Auto.objects.get(pk=auto_id)
     if request.method == 'POST':
-        """fields = ['znacka', 'rok_vyroby', 'cena', 'stav_tachometru', 'palivo', 'barva', 'prevodovka', 'motor', 'popis']
+        fields = ['znacka', 'model', 'rok_vyroby', 'cena', 'stav_tachometru', 'palivo', 'barva', 'prevodovka', 'popis']
+        upraveno = False
         for field in fields:
             value = request.POST.get(field)
             if not value:
                 messages.error(request, 'Neplatné údaje - ' + field)
                 return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
-            elif field != auto.field:
-                    setattr(auto, field, value)
+            elif getattr(auto, field) != type(getattr(auto, field))(value):
+                upraveno = True
+                setattr(auto, field, value)
+                auto.save()
             else:
-                messages.error(request, '{field} již je stejný')
-                return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
-                """
+                pass
         image = request.POST.get('image')
         if not image:
-            messages.error(request, 'Neplatný obrázek')
-            return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
+            pass
         else:
             try:
+                image = image.strip()
                 response = requests.get(image)
                 if response.status_code != 200:
                     raise ValueError('Neplatná adresa obrázku')
                 content_type = response.headers['content-type']
                 if not content_type.startswith('image/'):
                     raise ValueError('Adresa neobsahuje obrázek')
+                order = Image.objects.filter(auto_id=auto.id).count() + 1
+                img_obj = Image.objects.create(auto_id=auto, url=image.strip(), order=order)
+                img_obj.save()
+                upraveno = True
             except (requests.ConnectionError, ValueError):
                 messages.error(request, 'Neplatný obrázek')
-                return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
-           
-        order = Image.objects.filter(auto_id=auto.id).count() + 1
-        img_obj = Image.objects.create(auto_id=auto, url=image.strip(), order=order)
-        img_obj.save()
         auto.save()
-        messages.success(request, 'Úspěšně upraveno.')
-        return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
+        if upraveno:
+            messages.success(request, 'Úspěšně upraveno.')
+        return HttpResponseRedirect(reverse('auta:detail', args=[auto_id]))
     else:
         auto.images = Image.objects.filter(auto_id=auto.id).order_by('order')
         context = {
@@ -288,3 +289,9 @@ def auto_edit_view(request, auto_id):
             'auto.images': auto.images,
         }
         return render(request, 'auta/edit_car.html', context)
+    
+@login_required
+def auto_delete_view(request, auto_id):
+    auto = get_object_or_404(Auto, id=auto_id)
+    auto.delete()
+    return HttpResponseRedirect('/')
