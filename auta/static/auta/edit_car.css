@@ -10,16 +10,15 @@
 }
 
 .car-name h1{
-    grid-column: 0;
+    grid-column: 1;
     font-size: 25px;
 }
 
 .car-name input{
-    grid-column: 1;
+    position: relative;
+    grid-column: 2;
     font-size: 25px;
     font-weight: 600;
-    width: fit-content;
-    text-align: center;
 }
 
 .description{

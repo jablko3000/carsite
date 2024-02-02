@@ -1,0 +1,15 @@
+.tech-params.top table th{
+    color: black;
+    font-size: 32px;
+    font-weight: 500;
+}
+.tech-params.top table td{
+    color: black;
+    font-size: 32px;
+}
+input{
+    width: 30vw;
+    min-width: 150px;
+    height: 3vh;
+    min-height: 25px;
+}

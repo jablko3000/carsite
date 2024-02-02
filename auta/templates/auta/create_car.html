@@ -5,10 +5,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/static/swiper.css">
     <link rel="stylesheet" href="/static/edit_car.css">
+    <link rel="stylesheet" href="/static/create_car.css">
 {% endblock %}
-{% block title %}Upravit auto | {{ block.super }}{% endblock %}
+{% block title %}Vytvořit auto | {{ block.super }}{% endblock %}
 {% block content %}
-    <form action="{% url 'auta:auto_edit' auto.id %}"  method="POST">   
+    <form action="{% url 'auta:auto_create' %}"  method="POST">   
         {% csrf_token %}
         <div class="detail">
             <div class="swiper mySwiper">
@@ -46,51 +47,30 @@
                     prevEl: ".swiper-button-prev",
                     },
                 });
-            </script>
-            <div class="tech-params top">
-                <table>
-                    <tr>
-                        <th>Značka</th>
-                        <td><input type="text" name="stav_tachometru" value="{{ auto.znacka }}"></td>
-                    </tr>
-                    <tr>
-                        <th>Model</th>
-                        <td><input type="text" name="palivo" value="{{ auto.model }}"></td>
-                    </tr>
-                    <tr>
-                        <th>Rok výroby</th>
-                        <td><input type="text" name="barva" value="{{ auto.rok_vyroby }}"></td>
-                    </tr>
-                    <tr>
-                        <th>Cena</th>
-                        <td><input type="text" name="prevodovka" value="{{ auto.cena }}"></td>
-                    </tr>
-                </table>
-            </div>
+                </script>
             <div class="button-div">
-                <div class="button-div car-name">
-                    <div>
-                        <h1>Značka: </h1>
-                        <input type="text" name="znacka" value="{{ auto.znacka }}">
-                    </div>
-                    <div>
-                        <h1>Model: </h1>
-                        <input type="text" name="model" value="{{ auto.model }}">
-                    </div>
-                    <div>
-                        <h1>Rok výroby: </h1>
-                        <input type="text" name="rok_vyroby" value="{{ auto.rok_vyroby }}">
-                    </div>
-                    <div>
-                        <h1>Cena: </h1>
-                        <input type="text" name="cena" value="{{ auto.cena }}">
-                    </div>
+                <div class="tech-params top">
+                    <table>
+                        <tr>
+                            <th>Značka</th>
+                            <td><input type="text" name="znacka" value="{{ auto.znacka }}"></td>
+                        </tr>
+                        <tr>
+                            <th>Model</th>
+                            <td><input type="text" name="model" value="{{ auto.model }}"></td>
+                        </tr>
+                        <tr>
+                            <th>Rok výroby</th>
+                            <td><input type="text" name="rok_vyroby" value="{{ auto.rok_vyroby }}"></td>
+                        </tr>
+                        <tr>
+                            <th>Cena</th>
+                            <td><input type="text" name="cena" value="{{ auto.cena }}"></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="button-div buttons">
                     <button type="submit" class="button save">Uložit</button>
-                    <a href={%url 'auta:auto_delete' auto.id%}>
-                        <button type="button" class="button delete">Smazat</button>
-                    </a>
                 </div>
             </div>
             <h2>Technické parametry</h2>

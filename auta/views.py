@@ -292,6 +292,47 @@ def auto_edit_view(request, auto_id):
     
 @login_required
 def auto_delete_view(request, auto_id):
+    if not request.user.is_staff:
+        messages.error(request, 'Auta můžou mazat pouze zaměstnanci.')
+        return HttpResponseRedirect(reverse('auta:homepage'))
     auto = get_object_or_404(Auto, id=auto_id)
     auto.delete()
     return HttpResponseRedirect('/')
+
+@login_required
+def auto_create_view(request):
+    if not request.user.is_staff:
+        messages.error(request, 'Auta můžou vytvářet pouze zaměstnanci.')
+        return HttpResponseRedirect(reverse('auta:homepage'))
+    
+    if request.method == 'POST':
+        fields = ['znacka', 'model', 'rok_vyroby', 'cena', 'stav_tachometru', 'palivo', 'barva', 'prevodovka', 'popis']
+        auto = Auto()
+        for field in fields:
+            value = request.POST.get(field)
+            if not value:
+                messages.error(request, 'Neplatné údaje - ' + field)
+                return HttpResponseRedirect(reverse('auta:auto_create'))
+            setattr(auto, field, value)
+        auto.save()
+        image = request.POST.get('image')
+        if not image:
+            pass
+        else:
+            try:
+                image = image.strip()
+                response = requests.get(image)
+                if response.status_code != 200:
+                    raise ValueError('Neplatná adresa obrázku')
+                content_type = response.headers['content-type']
+                if not content_type.startswith('image/'):
+                    raise ValueError('Adresa neobsahuje obrázek')
+                order = Image.objects.filter(auto_id=auto.id).count() + 1
+                img_obj = Image.objects.create(auto_id=auto, url=image.strip(), order=order)
+                img_obj.save()
+                messages.success(request, 'Úspěšně vytvořeno.')
+            except (requests.ConnectionError, ValueError):
+                messages.error(request, 'Neplatný obrázek')
+        return HttpResponseRedirect(reverse('auta:detail', args=[auto.id]))
+    else:
+        return render(request, 'auta/create_car.html')

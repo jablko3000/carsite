@@ -7,6 +7,9 @@
     {% load static %}
       <div class="main_content">
         <h1>Naše nabídka</h1>
+        {% if user.is_staff %}
+            <a href="{% url 'auta:auto_create' %}">Přidat auto</a>
+        {% endif %}
           {% if auta_list %}
               <div class="car_show">
                   {% for auto in auta_list %}

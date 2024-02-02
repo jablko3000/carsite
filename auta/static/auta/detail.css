@@ -33,7 +33,7 @@ h2{
     vertical-align: middle;
     border-color: inherit;
     text-align: center;
-    margin: 0 5vw 0 5vw;
+    margin: 0 2.5vw 0 5vw;
 }
 
 .tech-params table th{
@@ -43,19 +43,19 @@ h2{
     background-color: transparent;
     vertical-align: top;
     text-align: left;
-    box-sizing: border-box;
     font-size: 20px;
     color: #484848;
 }
 
 .tech-params table td{
     padding: 0 14px 13px 0;
+    min-width: fit-content;
     border: 0 transparent;
     background-color: transparent;
     vertical-align: top;
     text-align: left;
-    box-sizing: border-box;
     font-size: 20px;
+    text-wrap: nowrap;
 }
 
 .tech-params.table-div{
@@ -72,8 +72,8 @@ h2{
 
 .tech-params p{
     font-size: 20px;
-    margin-left: 5vw;
     text-align: left;
+    margin: 0 2.5vw 0 5vw;
 }
 
 .button{
