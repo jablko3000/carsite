@@ -14,17 +14,11 @@
         <div class="detail">
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                {% for image in auto.images %}
-                    {% if image.url %}
-                        <div class="swiper-slide">
-                            <img src="{{ image.url }}" alt="Image" style="cursor: pointer;" data-enlargeable>
+                    <div class="swiper-slide" style="height:15vh">
+                        <div class="add_image">
+                            <p>Přidat obrázek</p>
+                            <input type="text" name="image" id="image" placeholder="Zadejte odkaz na obrázek" value="{{ image }}">
                         </div>
-                    {% endif %}
-                {% endfor %}
-                <div class="swiper-slide" style="height:15vh">
-                    <div class="add_image">
-                        <p>Přidat obrázek</p>
-                        <input type="text" name="image" id="image" placeholder="Zadejte odkaz na obrázek">
                     </div>
                 </div>
             </div>
@@ -53,19 +47,19 @@
                     <table>
                         <tr>
                             <th>Značka</th>
-                            <td><input type="text" name="znacka" value="{{ auto.znacka }}"></td>
+                            <td><input type="text" name="znacka" value="{{ znacka }}"></td>
                         </tr>
                         <tr>
                             <th>Model</th>
-                            <td><input type="text" name="model" value="{{ auto.model }}"></td>
+                            <td><input type="text" name="model" value="{{ model }}"></td>
                         </tr>
                         <tr>
                             <th>Rok výroby</th>
-                            <td><input type="text" name="rok_vyroby" value="{{ auto.rok_vyroby }}"></td>
+                            <td><input type="text" name="rok_vyroby" value="{{ rok_vyroby }}"></td>
                         </tr>
                         <tr>
                             <th>Cena</th>
-                            <td><input type="text" name="cena" value="{{ auto.cena }}"></td>
+                            <td><input type="text" name="cena" value="{{ cena }}"></td>
                         </tr>
                     </table>
                 </div>
@@ -78,23 +72,23 @@
                 <table>
                     <tr>
                         <th>Stav tachometru</th>
-                        <td><input type="text" name="stav_tachometru" value="{{ auto.stav_tachometru }}"></td>
+                        <td><input type="text" name="stav_tachometru" value="{{ stav_tachometru }}"></td>
                     </tr>
                     <tr>
                         <th>Palivo</th>
-                        <td><input type="text" name="palivo" value="{{ auto.palivo }}"></td>
+                        <td><input type="text" name="palivo" value="{{ palivo }}"></td>
                     </tr>
                     <tr>
                         <th>Barva</th>
-                        <td><input type="text" name="barva" value="{{ auto.barva }}"></td>
+                        <td><input type="text" name="barva" value="{{ barva }}"></td>
                     </tr>
                     <tr>
                         <th>Převodovka</th>
-                        <td><input type="text" name="prevodovka" value="{{ auto.prevodovka }}"></td>
+                        <td><input type="text" name="prevodovka" value="{{ prevodovka }}"></td>
                     </tr>
                 </table>
             
-                <input type="text" name="popis" value="{{ auto.popis }}" class="description">
+                <input type="text" name="popis" value="{{ popis }}" class="description">
             </div>
         </div>
     </form>

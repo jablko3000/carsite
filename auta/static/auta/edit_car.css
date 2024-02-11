@@ -26,6 +26,33 @@
     width: 30vw;
 }
 
+.swiper-slide{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 58vh;
+}
+
+.image_url{
+    width: 50vw;
+    height: 5vh;
+    margin: 1vh 1vw;
+    text-align: center;
+}
+
+.tech-params table th{
+    color: black;
+    font-size: 32px;
+    font-weight: 550;
+}
+
+.tech-params table td input{
+    color: black;
+    font-size: 32px;
+}
+
 @media (max-width: 900px){
     .button-div{
         display: block;
@@ -47,5 +74,16 @@
     }
     .tech-params{
         flex-direction: column;
+    }
+    tr {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+    td input{
+        width: 90%;
+    }
+    .description{
+        width: 90%;
     }
 }

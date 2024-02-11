@@ -251,29 +251,60 @@ def auto_edit_view(request, auto_id):
         upraveno = False
         for field in fields:
             value = request.POST.get(field)
+            print(field, value, getattr(auto, field))
             if not value:
                 messages.error(request, 'Neplatné údaje - ' + field)
                 return HttpResponseRedirect(reverse('auta:auto_edit', args=[auto_id]))
+            elif field == 'rok_vyroby' or field == 'cena' or field == 'stav_tachometru':
+                try:
+                    value = int(value)
+                    setattr(auto, field, value)
+                except ValueError:
+                    messages.error(request, 'Neplatné údaje - ' + field)
             elif getattr(auto, field) != type(getattr(auto, field))(value):
                 upraveno = True
                 setattr(auto, field, value)
                 auto.save()
             else:
                 pass
-        image = request.POST.get('image')
-        if not image:
+        #Existinx images
+        images = Image.objects.filter(auto_id=auto.id).order_by('order')
+        for image in images:
+            try:
+                edit_image = request.POST.get('image' + str(image.id))
+                if edit_image == '' or edit_image == None:
+                    image.delete()
+                    upraveno = True
+                elif edit_image != image.url:
+                    response = requests.get(edit_image)
+                    if response.status_code != 200:
+                        raise ValueError('Neplatná adresa obrázku')
+                    content_type = response.headers['content-type']
+                    if not content_type.startswith('image/'):
+                        raise ValueError('Adresa neobsahuje obrázek')
+                    image.url = edit_image
+                    upraveno = True
+                    image.save()
+                else:
+                    pass
+            except (requests.ConnectionError, ValueError):
+                messages.error(request, 'Neplatný obrázek')
+
+
+        new_image = request.POST.get('image')
+        if not new_image:
             pass
         else:
             try:
-                image = image.strip()
-                response = requests.get(image)
+                new_image = new_image.strip()
+                response = requests.get(new_image)
                 if response.status_code != 200:
                     raise ValueError('Neplatná adresa obrázku')
                 content_type = response.headers['content-type']
                 if not content_type.startswith('image/'):
                     raise ValueError('Adresa neobsahuje obrázek')
                 order = Image.objects.filter(auto_id=auto.id).count() + 1
-                img_obj = Image.objects.create(auto_id=auto, url=image.strip(), order=order)
+                img_obj = Image.objects.create(auto_id=auto, url=new_image, order=order)
                 img_obj.save()
                 upraveno = True
             except (requests.ConnectionError, ValueError):
@@ -308,16 +339,28 @@ def auto_create_view(request):
     if request.method == 'POST':
         fields = ['znacka', 'model', 'rok_vyroby', 'cena', 'stav_tachometru', 'palivo', 'barva', 'prevodovka', 'popis']
         auto = Auto()
+        context = {}
+        error_counter = 0
         for field in fields:
             value = request.POST.get(field)
             if not value:
                 messages.error(request, 'Neplatné údaje - ' + field)
-                return HttpResponseRedirect(reverse('auta:auto_create'))
-            setattr(auto, field, value)
-        auto.save()
+                error_counter += 1
+            elif field == 'rok_vyroby' or field == 'cena' or field == 'stav_tachometru':
+                try:
+                    value = int(value)
+                    setattr(auto, field, value)
+                    context[field] = value
+                except ValueError:
+                    error_counter += 1
+                    messages.error(request, 'Neplatné údaje - ' + field)
+            else:
+                setattr(auto, field, value)
+                context[field] = value
         image = request.POST.get('image')
         if not image:
-            pass
+            error_counter += 1
+            messages.error(request, 'Neplatný obrázek')
         else:
             try:
                 image = image.strip()
@@ -328,11 +371,17 @@ def auto_create_view(request):
                 if not content_type.startswith('image/'):
                     raise ValueError('Adresa neobsahuje obrázek')
                 order = Image.objects.filter(auto_id=auto.id).count() + 1
-                img_obj = Image.objects.create(auto_id=auto, url=image.strip(), order=order)
-                img_obj.save()
-                messages.success(request, 'Úspěšně vytvořeno.')
+                context['image'] = image
             except (requests.ConnectionError, ValueError):
+                error_counter += 1
                 messages.error(request, 'Neplatný obrázek')
+        if error_counter > 0:
+            return render(request, 'auta/create_car.html', context)
+        else:
+            auto.save()
+            img_obj = Image.objects.create(auto_id=auto, url=image.strip(), order=order)
+            img_obj.save()
+            messages.success(request, 'Úspěšně vytvořeno.')
         return HttpResponseRedirect(reverse('auta:detail', args=[auto.id]))
     else:
         return render(request, 'auta/create_car.html')

@@ -8,8 +8,6 @@
     font-size: 32px;
 }
 input{
-    width: 30vw;
-    min-width: 150px;
+    width: 300px;
     height: 3vh;
-    min-height: 25px;
 }
