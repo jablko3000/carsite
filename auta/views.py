@@ -267,7 +267,7 @@ def auto_edit_view(request, auto_id):
                 auto.save()
             else:
                 pass
-        #Existinx images
+        #Existing images
         images = Image.objects.filter(auto_id=auto.id).order_by('order')
         for image in images:
             try:
@@ -290,7 +290,7 @@ def auto_edit_view(request, auto_id):
             except (requests.ConnectionError, ValueError):
                 messages.error(request, 'Neplatný obrázek')
 
-
+        #New image
         new_image = request.POST.get('image')
         if not new_image:
             pass
