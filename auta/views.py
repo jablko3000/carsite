@@ -193,7 +193,7 @@ def auto_reserve_view(request, auto_id):
             else:
                 messages.error(request, 'Neplatné údaje.')
                 return HttpResponseRedirect(reverse('auta:homepage'))
-            messages.success(request, 'Úspěšně rezervováno.')
+            messages.success(request, 'Úspěšně rezervováno. Vaše rezervace najdete ve vašem profilu.')
             return HttpResponseRedirect(reverse('auta:detail', args=(auto_id,)))
     else:
         messages.error(request, 'Nepodařilo se rezervovat.')
@@ -253,14 +253,6 @@ def reservation_delete_view(request, reservation_id):
     except Rezervace.DoesNotExist:
         messages.error(request, 'Rezervace neexistuje.')
         return HttpResponseRedirect(reverse('auta:user_profile'))
-
-
-
-
-
-
-
-
 
 @login_required
 def auto_edit_view(request, auto_id):

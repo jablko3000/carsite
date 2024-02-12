@@ -7,7 +7,13 @@
     color: black;
     font-size: 32px;
 }
-input{
-    width: 300px;
+.add_image input{
+    width: 40vw;
     height: 3vh;
+}
+
+@media (max-width: 900px){
+    .add_image input{
+        width: 80vw;
+    }
 }
