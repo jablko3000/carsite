@@ -41,6 +41,7 @@
     <div class="button-div">
         <div class="button-div car-name">
             <h1>{{ auto.znacka }} {{ auto.model }}, {{ auto.rok_vyroby }}</h1>
+            <h1><script>formattedNumber({{ auto.cena }})</script> Kč</h1>
         </div>
         <div class="button-div buttons">
         {% if user.is_staff %}

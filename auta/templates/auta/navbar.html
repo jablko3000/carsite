@@ -3,6 +3,7 @@
         <div class="logo"><a href="{%url 'auta:homepage'%}">Autogalaxie Brno</a></div>
         <ul class="links">
             <li><a href="{%url 'auta:homepage'%}">Naše nabídka</a></li>
+            <li><a href="{%url 'auta:contact'%}">Kontakt</a></li>
             {% if user.is_staff %}
                 <li><a href="{%url 'admin:index'%}">Admin</a></li>
             {% endif %}
@@ -22,6 +23,7 @@
     <div class="dropdown_menu">
         <div>
             <li><a href="{%url 'auta:homepage'%}">Naše nabídka</a></li>
+            <li><a href="{%url 'auta:contact'%}">Kontakt</a></li>
             {% if user.is_staff %}
                 <li><a href="{%url 'admin:index'%}">Admin</a></li>
             {% endif %}

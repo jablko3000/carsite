@@ -36,6 +36,9 @@ def homepage_view(request):
 
     return render(request, 'auta/homepage.html', context)
 
+def contact_view(request):
+    return render(request, 'auta/contact.html')
+
 def detail_view(request, auto_id):
     try:
         auto = Auto.objects.get(pk=auto_id)

@@ -7,6 +7,7 @@ app_name = "auta"
 urlpatterns = [
     path("", views.homepage_view, name="homepage"),
     path("auto/<int:auto_id>/", views.detail_view, name="detail"),
+    path("contact/", views.contact_view, name="contact"),
     path("auto/<int:auto_id>/edit/", views.auto_edit_view, name="auto_edit"),
     path("auto/<int:auto_id>/reserve/", views.auto_reserve_view, name="auto_reserve"),
     path("reservation/<int:reservation_id>/delete/", views.reservation_delete_view, name="reservation_delete"),

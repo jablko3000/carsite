@@ -1,0 +1,25 @@
+h2{
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 3vh;
+    margin-top: 2vh;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+h3{
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 2vh;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+iframe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40vh;
+    width:75vw;
+    margin-bottom: 3vh;
+}
