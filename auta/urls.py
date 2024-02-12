@@ -9,6 +9,7 @@ urlpatterns = [
     path("auto/<int:auto_id>/", views.detail_view, name="detail"),
     path("auto/<int:auto_id>/edit/", views.auto_edit_view, name="auto_edit"),
     path("auto/<int:auto_id>/reserve/", views.auto_reserve_view, name="auto_reserve"),
+    path("reservation/<int:reservation_id>/delete/", views.reservation_delete_view, name="reservation_delete"),
     path("auto/<int:auto_id>/delete/", views.auto_delete_view, name="auto_delete"),
     path("auto/create/", views.auto_create_view, name="auto_create"),
     path("login/", views.user_login, name="user_login"),

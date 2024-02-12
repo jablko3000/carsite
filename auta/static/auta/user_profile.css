@@ -77,11 +77,17 @@
     flex-wrap: wrap;
 }
 
-.rezervace-grid a {
-    cursor: pointer;
+.rezervace-grid div {
     position: relative;
+    display: flex;
+    flex-direction: row;
     margin: 0.5vh 0.3vw;
     background-color: rgba(200,200,200,0.8);
     border-radius: 10px;
-    padding: 0.2rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.rezervace-grid a {
+    cursor: pointer;
+    margin: 0 0.5vw;
 }

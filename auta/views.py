@@ -240,6 +240,29 @@ def get_dates_json(request):
     return JsonResponse({'dates': get_dates(auto)})
 
 @login_required
+def reservation_delete_view(request, reservation_id):
+    try:
+        reservation = get_object_or_404(Rezervace, id=reservation_id)
+        if reservation.user == request.user:
+            reservation.delete()
+            messages.success(request, 'Rezervace úspěšně smazána.')
+            return HttpResponseRedirect(reverse('auta:user_profile'))
+        else:
+            messages.error(request, 'Nepodařilo se smazat rezervaci.')
+            return HttpResponseRedirect(reverse('auta:user_profile'))
+    except Rezervace.DoesNotExist:
+        messages.error(request, 'Rezervace neexistuje.')
+        return HttpResponseRedirect(reverse('auta:user_profile'))
+
+
+
+
+
+
+
+
+
+@login_required
 def auto_edit_view(request, auto_id):
     if not request.user.is_staff:
         messages.error(request, 'Auta můžou upravovat pouze zaměstnanci.')

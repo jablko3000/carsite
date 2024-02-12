@@ -31,7 +31,10 @@
                 <h3>Vaše rezervace</h3>
                 <div class="rezervace-grid">
                     {% for rez in rezervace %}
-                        <a href="{% url 'auta:detail' rez.auto.id %}"><h5>{{ rez.auto }} - {{ rez.datum_a_cas }}</h5></a>
+                    <div>
+                        <a href="{% url 'auta:detail' rez.auto.id %}" class="rezervace"><h5>{{ rez.auto }} - {{ rez.datum_a_cas }}</h5></a>
+                        <a href="{% url 'auta:reservation_delete' rez.id %}"><span class="icon-close"><ion-icon name="close"></ion-icon></span></a>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
