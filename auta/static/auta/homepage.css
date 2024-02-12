@@ -80,14 +80,14 @@ h1{
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: green;
+  background: #162938;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: 0.5s;
   font-size: 85px;
-  color: #000;
+  color: white;
   z-index: 1000;
 }
 
