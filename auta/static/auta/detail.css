@@ -7,9 +7,8 @@ h1{
     position: relative;
     font-size: 40px;
     font-weight: 600;
-    margin: 0 15vw 0 5vw;
+    margin: 0 5vw 0 5vw;
     z-index: 5;
-    width: fit-content;
     text-align: center;
 }
 
@@ -103,14 +102,14 @@ h2{
     justify-content: center;
 }
 
+a{
+    text-decoration: none;
+}
+
 @media (max-width: 900px){
     .button-div{
         display: block;
         text-align: center;
-    }
-
-    .button-div.car-name{
-        display: flex;
     }
     .button{
         margin: 1vh 2vw;
@@ -124,5 +123,22 @@ h2{
     }
     .tech-params{
         flex-direction: column;
+    }
+}
+
+@media (max-width: 1600){
+    .button-div{
+        display: block;
+        text-align: center;
+    }
+    .button{
+        margin: 1vh 2vw;
+    }
+    h1{
+        margin: 0 5vw 0 5vw;
+    }
+    .tech-params.big{
+        display: block;
+        text-align: center;
     }
 }
