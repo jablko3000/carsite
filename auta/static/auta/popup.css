@@ -61,6 +61,10 @@
     height: 250px;
 }
 
+.wapper.delete{
+    height: 250px;
+}
+
 .wrapper .form-box{
     width: 100%;
     padding: 40px;
@@ -92,6 +96,16 @@
 }
 
 .wrapper.logout .form-box.logout{
+    transition: transform 0.18s ease;
+    transform: translateX(0px);
+}
+
+.wrapper .form-box.delete{
+    position: absolute;
+    transform: translateX(150vw);
+}
+
+.wrapper.delete .form-box.delete{
     transition: transform 0.18s ease;
     transform: translateX(0px);
 }

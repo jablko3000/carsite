@@ -346,6 +346,7 @@ def auto_delete_view(request, auto_id):
         return HttpResponseRedirect(reverse('auta:homepage'))
     auto = get_object_or_404(Auto, id=auto_id)
     auto.delete()
+    messages.success(request, 'Auto bylo úspěšně smazáno.')
     return HttpResponseRedirect('/')
 
 @login_required

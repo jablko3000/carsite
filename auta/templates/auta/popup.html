@@ -87,6 +87,16 @@
                 </form>
             </div>
         {% endif %}
+        {% if request.resolver_match.url_name == 'auto_edit' %}
+            <div class = "form-box delete auto">
+                <h2>Opravdu chcete smazat auto?</h2>
+                <form action="{% url 'auta:auto_delete' auto.id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Smazat auto</button>
+                </form>
+            </div>
+        {% endif %}
+                        
     {% else %}
         <div class="form-box login" >
         <h2>Přihlásit se</h2>
