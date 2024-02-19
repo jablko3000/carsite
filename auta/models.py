@@ -60,14 +60,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Auto(models.Model):
     znacka = models.CharField(max_length=25)
     model = models.CharField(max_length=75)
-    rok_vyroby = models.IntegerField(validators=[MinValueValidator(1880), MaxValueValidator(2050)])
-    cena = models.IntegerField(validators=[MinValueValidator(0)], max_length=12)
+    rok_vyroby = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9999)])
+    cena = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(99999999999)])
     datum_nabidky = models.DateTimeField(default=timezone.now)
     stav_tachometru = models.IntegerField(validators=[MinValueValidator(0)])
     palivo = models.CharField(max_length=25)
     barva = models.CharField(max_length=25)
     prevodovka = models.CharField(max_length=50)
-    motor = models.CharField(max_length=75)
     popis = models.CharField(max_length=1000)
     
     def __str__(self):
@@ -90,7 +89,7 @@ class Rezervace(models.Model):
         verbose_name_plural = 'Rezervace'
 
 class Image(models.Model):
-    auto_id = models.ForeignKey(Auto, on_delete=models.CASCADE)
+    auto_id = models.ForeignKey(Auto, on_delete=models.CASCADE, blank=True, null=True)
     url = models.CharField(max_length=200)
     order = models.IntegerField(default=1)
     class Meta:
@@ -99,14 +98,3 @@ class Image(models.Model):
 
     def __str__(self):
         return f"Obrázek pro {self.auto_id}"
-
-class Note(models.Model):
-    auto_id = models.ForeignKey(Auto, on_delete=models.CASCADE)
-    content = models.CharField(max_length=1500)
-    order = models.IntegerField(default=1)
-    class Meta:
-        verbose_name = 'Poznámka'
-        verbose_name_plural = 'Poznámky'
-
-    def __str__(self):
-        return f"Poznámka pro {self.auto_id}"

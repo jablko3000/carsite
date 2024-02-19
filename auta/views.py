@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.contrib import messages
 import requests
 
-from .models import Auto, Rezervace, CustomUser, Image, Note
+from .models import Auto, Rezervace, CustomUser, Image
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -23,7 +23,6 @@ def homepage_view(request):
 
     for auto in auta_list:
         auto.images = Image.objects.filter(auto_id=auto.id).order_by('order')
-        auto.notes = Note.objects.filter(auto_id=auto.id).order_by('order')
 
     context = {
         'auta_list': auta_list,

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Auto, Rezervace, CustomUser, Image, Note
+from .models import Auto, Rezervace, CustomUser, Image
 
 # Register your models here.
 
@@ -9,4 +9,3 @@ admin.site.register(Auto)
 admin.site.register(Rezervace)
 admin.site.register(CustomUser)
 admin.site.register(Image)
-admin.site.register(Note)
