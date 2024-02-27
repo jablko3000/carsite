@@ -4,7 +4,7 @@
         <ul class="links">
             <li><a href="{%url 'auta:homepage'%}">Naše nabídka</a></li>
             <li><a href="{%url 'auta:contact'%}">Kontakt</a></li>
-            {% if user.is_staff %}
+            {% if user.is_superuser %}
                 <li><a href="{%url 'admin:index'%}">Admin</a></li>
             {% endif %}
             {%if user.is_authenticated%}
@@ -24,7 +24,7 @@
         <div>
             <li><a href="{%url 'auta:homepage'%}">Naše nabídka</a></li>
             <li><a href="{%url 'auta:contact'%}">Kontakt</a></li>
-            {% if user.is_staff %}
+            {% if user.is_superuser %}
                 <li><a href="{%url 'admin:index'%}">Admin</a></li>
             {% endif %}
             {%if user.is_authenticated%}
