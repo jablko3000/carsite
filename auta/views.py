@@ -311,45 +311,27 @@ def auto_edit_view(request, auto_id):
         #Existing images
         images = Image.objects.filter(auto_id=auto.id).order_by('order')
         for image in images:
-            try:
-                edit_image = request.POST.get('image' + str(image.id))
-                if edit_image == '' or edit_image == None:
-                    image.delete()
-                    upraveno = True
-                elif edit_image != image.url:
-                    response = requests.get(edit_image)
-                    if response.status_code != 200:
-                        raise ValueError('Neplatná adresa obrázku')
-                    content_type = response.headers['content-type']
-                    if not content_type.startswith('image/'):
-                        raise ValueError('Adresa neobsahuje obrázek')
-                    image.url = edit_image
-                    upraveno = True
-                    image.save()
-                else:
-                    pass
-            except (requests.ConnectionError, ValueError):
-                messages.error(request, 'Neplatný obrázek')
+            edit_image = request.POST.get('image' + str(image.id))
+            if edit_image == '' or edit_image == None:
+                image.delete()
+                upraveno = True
+            elif edit_image != image.url:
+                image.url = edit_image
+                upraveno = True
+                image.save()
+            else:
+                pass
 
         #New image
         new_image = request.POST.get('image')
         if not new_image:
             pass
         else:
-            try:
-                new_image = new_image.strip()
-                response = requests.get(new_image)
-                if response.status_code != 200:
-                    raise ValueError('Neplatná adresa obrázku')
-                content_type = response.headers['content-type']
-                if not content_type.startswith('image/'):
-                    raise ValueError('Adresa neobsahuje obrázek')
-                order = Image.objects.filter(auto_id=auto.id).count() + 1
-                img_obj = Image.objects.create(auto_id=auto, url=new_image, order=order)
-                img_obj.save()
-                upraveno = True
-            except (requests.ConnectionError, ValueError):
-                messages.error(request, 'Neplatný obrázek')
+            new_image = new_image.strip()
+            order = Image.objects.filter(auto_id=auto.id).count() + 1
+            img_obj = Image.objects.create(auto_id=auto, url=new_image, order=order)
+            img_obj.save()
+            upraveno = True
         auto.save()
         if upraveno:
             messages.success(request, 'Úspěšně upraveno.')
