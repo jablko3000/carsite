@@ -29,11 +29,6 @@ h1{
   transition: 0.5s;
 }
 
-.car_preview:hover{
-  transform: scale(1.1);
-  transition: 0.5s;
-}
-
 .img_container{
   position: relative;
   display: flex;
@@ -41,6 +36,12 @@ h1{
   justify-content: center;
   height: 20vh;
   margin-bottom: 25px;
+  transition: 0.5s;
+}
+
+.img_container:hover{
+  transform: scale(1.1);
+  transition: 0.5s;
 }
 
 .car_preview img{
