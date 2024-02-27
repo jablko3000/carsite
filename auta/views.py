@@ -98,6 +98,18 @@ def user_register(request):
         if password1 != password2:
             messages.error(request, 'Hesla se neshodují.')
             return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&register=True')
+        elif len(password1.strip()) < 6:
+            messages.error(request, 'Heslo musí mít alespoň 6 znaků.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&register=True')
+        elif len(phone.strip()) < 9 or len(phone.strip()) > 13:
+            messages.error(request, 'Neplatné telefonní číslo.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&register=True')
+        elif len(full_name.strip()) < 3 or len(full_name.strip()) > 50:
+            messages.error(request, 'Neplatné jméno.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&register=True')
+        elif len(email.strip()) < 5 or len(email.strip()) > 50:
+            messages.error(request, 'Neplatný email.')
+            return HttpResponseRedirect(reverse('auta:homepage') + '?show_popup=True&register=True')
         else:
             if CustomUser.objects.filter(email=email).exists():
                 messages.error(request, 'Uživatel s tímto emailem již existuje.')
@@ -132,6 +144,9 @@ def user_profile_edit(request):
             if not full_name:
                 messages.error(request, 'Neplatné údaje.')
                 return HttpResponseRedirect(reverse('auta:user_profile'))
+            elif len(full_name.strip()) < 3 or len(full_name.strip()) > 50:
+                messages.error(request, 'Neplatné jméno.')
+                return HttpResponseRedirect(reverse('auta:user_profile'))
             else:
                 user.full_name = full_name
                 user.save()
@@ -139,6 +154,9 @@ def user_profile_edit(request):
             email = request.POST.get("email")
             if not email:
                 messages.error(request, 'Neplatné údaje.')
+                return HttpResponseRedirect(reverse('auta:user_profile'))
+            elif len(email.strip()) < 5 or len(email.strip()) > 50:
+                messages.error(request, 'Neplatný email.')
                 return HttpResponseRedirect(reverse('auta:user_profile'))
             else:
                 user.email = email
@@ -148,6 +166,9 @@ def user_profile_edit(request):
             phone = request.POST.get("phone")
             if not phone:
                 messages.error(request, 'Neplatné údaje.')
+                return HttpResponseRedirect(reverse('auta:user_profile'))
+            elif len(phone.strip()) < 9 or len(phone.strip()) > 13:
+                messages.error(request, 'Neplatné telefonní číslo.')
                 return HttpResponseRedirect(reverse('auta:user_profile'))
             else:
                 user.phone = phone
@@ -161,8 +182,11 @@ def user_profile_edit(request):
                 if not password1 or not password2:
                     messages.error(request, 'Neplatné údaje.')
                     return HttpResponseRedirect(reverse('auta:user_profile'))
-                if password1 != password2:
+                elif password1 != password2:
                     messages.error(request, 'Hesla se neshodují.')
+                    return HttpResponseRedirect(reverse('auta:user_profile'))
+                elif len(password1.strip()) < 6:
+                    messages.error(request, 'Heslo musí mít alespoň 6 znaků.')
                     return HttpResponseRedirect(reverse('auta:user_profile'))
                 else:
                     user.set_password(password1)
