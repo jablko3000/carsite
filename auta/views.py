@@ -386,19 +386,9 @@ def auto_create_view(request):
             error_counter += 1
             messages.error(request, 'Neplatný obrázek')
         else:
-            try:
-                image = image.strip()
-                response = requests.get(image)
-                if response.status_code != 200:
-                    raise ValueError('Neplatná adresa obrázku')
-                content_type = response.headers['content-type']
-                if not content_type.startswith('image/'):
-                    raise ValueError('Adresa neobsahuje obrázek')
-                order = Image.objects.filter(auto_id=auto.id).count() + 1
-                context['image'] = image
-            except (requests.ConnectionError, ValueError):
-                error_counter += 1
-                messages.error(request, 'Neplatný obrázek')
+            image = image.strip()
+            order = Image.objects.filter(auto_id=auto.id).count() + 1
+            context['image'] = image
         if error_counter > 0:
             return render(request, 'auta/create_car.html', context)
         else:
